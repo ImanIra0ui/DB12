@@ -8,9 +8,13 @@ import pytest
 
 @pytest.mark.parametrize("copies, iterations, extraIteration", [
 	('single', 1, False),
+	('single', 2, True),
 	('wholenode', 1, False),
+	('wholenode', 2, True),
 	('jobslot', 1, False),
-	(2, 1, False)
+	('jobslot', 2, True),
+	(2, 1, False),
+	(2, 2, False)
 ])
 
 def testDIRACbenchmark(copies, iterations, extraIteration):
