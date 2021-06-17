@@ -21,7 +21,7 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
      assert result >= 0
      assert result < 100
 
-  '''if copies == 'wholenode':
+  if copies == 'wholenode':
     result = wholenodeDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
 
     assert result['geometric_mean'] >=0 and result['geometric_mean']< 100
@@ -30,7 +30,7 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
 
     for i in result['raw']:
        assert i >= 0
-       assert i < 100'''
+       assert i < 100
 
   if copies == 'jobslot':
     result = jobslotDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
