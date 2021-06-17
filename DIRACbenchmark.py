@@ -75,7 +75,7 @@ def singleDiracBenchmark( iterations = 1, measuredCopies = None ):
 
   if not cput:
     return None
-  
+
   # Return DIRAC-compatible values
   return { 'CPU' : cput, 'WALL' : wall, 'NORM' : calib * iterations / cput, 'UNIT' : 'DB12' }
 
@@ -135,7 +135,9 @@ def multipleDiracBenchmark( copies = 1, iterations = 1, extraIteration = False )
            'sum'             : sum(raw),
            'arithmetic_mean' : sum(raw)/copies,
            'geometric_mean'  : product ** (1.0 / copies),
-           'median'          : raw[(copies-1) / 2] }
+           'median'          : raw[(copies-1) // 2] }
+
+  print(raw, copies)
   
 def wholenodeDiracBenchmark( copies = None, iterations = 1, extraIteration = False ): 
 
@@ -254,3 +256,4 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
   print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
   print(' '.join([str(i) for i in result['raw']]))
   sys.exit(0)
+
