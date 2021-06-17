@@ -243,18 +243,18 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
   if copies == 'wholenode':
     result = wholenodeDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
-    print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+    print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
     print(' '.join([str(i) for i in result['raw']]))
     sys.exit(0)
 
   if copies == 'jobslot':
     result = jobslotDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
-    print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+    print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
     print(' '.join([str(i) for i in result['raw']]))
     sys.exit(0)
 
   result = multipleDiracBenchmark( copies = int(copies), iterations = iterations, extraIteration = extraIteration )
-  print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+  print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
   print(' '.join([str(i) for i in result['raw']]))
   sys.exit(0)
 
