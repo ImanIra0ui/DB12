@@ -20,8 +20,6 @@
     
     Run  ./DIRACbenchmark.py help  to see more options.
 """
-from __future__ import print_function
-from __future__ import division
 
 import os
 import sys
@@ -30,9 +28,6 @@ import urllib
 import multiprocessing
 
 version = '00.04 DB12'
-
-if sys.version_info > (3,):
-	long = int
 
 def singleDiracBenchmark( iterations = 1, measuredCopies = None ):
   """ Get Normalized Power of one CPU in DIRAC Benchmark 2012 units (DB12)
@@ -55,7 +50,7 @@ def singleDiracBenchmark( iterations = 1, measuredCopies = None ):
       start = os.times()
 
     # Now the iterations
-    for _j in range( n ):
+    for _j in xrange( n ):
       t = random.normalvariate( 10, 1 )
       m += t
       m2 += t * t
@@ -240,17 +235,17 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
   if copies == 'wholenode':
     result = wholenodeDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
-    print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+    print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
     print(' '.join([str(i) for i in result['raw']]))
     sys.exit(0)
 
   if copies == 'jobslot':
     result = jobslotDiracBenchmark( iterations = iterations, extraIteration = extraIteration )
-    print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+    print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
     print(' '.join([str(i) for i in result['raw']]))
     sys.exit(0)
 
   result = multipleDiracBenchmark( copies = int(copies), iterations = iterations, extraIteration = extraIteration )
-  print((result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median']))
+  print(result['copies'],result['sum'],result['arithmetic_mean'],result['geometric_mean'],result['median'])
   print(' '.join([str(i) for i in result['raw']]))
   sys.exit(0)
