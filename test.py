@@ -14,7 +14,7 @@ import pytest
 	('jobslot', 1, False),
 	('jobslot', 2, True),
 	(2, 1, False),
-	(2, 2, False)
+	(2, 2, True)
 ])
 
 def testDIRACbenchmark(copies, iterations, extraIteration):
