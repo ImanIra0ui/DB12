@@ -137,8 +137,6 @@ def multipleDiracBenchmark( copies = 1, iterations = 1, extraIteration = False )
            'arithmetic_mean' : sum(raw)/copies,
            'geometric_mean'  : product ** (1.0 / copies),
            'median'          : raw[(copies-1) // 2] }
-
-  print(raw, copies)
   
 def wholenodeDiracBenchmark( copies = None, iterations = 1, extraIteration = False ): 
 
