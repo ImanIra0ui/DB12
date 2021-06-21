@@ -32,6 +32,9 @@ import multiprocessing
 
 version = '00.04 DB12'
 
+if sys.version_info < (3,):
+	range = xrange
+
 if sys.version_info > (3,):
 	long = int
 
@@ -62,6 +65,9 @@ def singleDiracBenchmark( iterations = 1, measuredCopies = None ):
       m2 += t * t
       p += t
       p2 += t * t
+
+    
+	
 
     if i == iterations:
       end = os.times()
