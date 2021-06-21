@@ -32,11 +32,9 @@ import multiprocessing
 
 version = "00.04 DB12"
 
-if sys.version_info < (3,):
-    range = xrange
-
 if sys.version_info > (3,):
     long = int
+    from past.builtins import xrange
 
 
 def singleDiracBenchmark(iterations=1, measuredCopies=None):
@@ -61,7 +59,7 @@ def singleDiracBenchmark(iterations=1, measuredCopies=None):
             start = os.times()
 
         # Now the iterations
-        for _j in range(n):
+        for _j in xrange(n):
             t = random.normalvariate(10, 1)
             m += t
             m2 += t * t
@@ -121,7 +119,7 @@ def multipleDiracBenchmark(copies=1, iterations=1, extraIteration=False):
         measuredCopies = None
 
     # Set up all the subprocesses
-    for i in range(copies):
+    for i in xrange(copies):
         results.append(multiprocessing.Value("d", 0.0))
         processes.append(
             multiprocessing.Process(
@@ -212,39 +210,31 @@ if __name__ == "__main__":
 
     helpString = """DIRACbenchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
-
 Uses the functions within DIRACbenchmark.py to run the DB12 benchmark from the 
 command line.
-
 By default one benchmarking iteration is run, in addition to the initial 
 iteration which DB12 runs and ignores to avoid ramp-up effects at the start.
 The number of benchmarking iterations can be increased using the --iterations
 option. Additional iterations which are also ignored can be added with the 
 --extra-iteration option  to avoid tail effects. In this case copies which
 finish early run additional iterations until all the measurements finish.
-
 The COPIES (ie an integer) argument causes multiple copies of the benchmark to
 be run in parallel. The tokens "wholenode", "jobslot" and "single" can be 
 given instead to use $MACHINEFEATURES/total_cpu, $JOBFEATURES/allocated_cpu, 
 or 1 as the number of copies respectively. If $MACHINEFEATURES/total_cpu is
 not available, then the number of (logical) processors visible to the 
 operating system is used.
-
 Unless the token "single" is used, the script prints the following results to
 two lines on stdout:
-
 COPIES SUM ARITHMETIC-MEAN GEOMETRIC-MEAN MEDIAN
 RAW-RESULTS
-
 The tokens "version" and "help" print information about the script.
-
 The source code of DIRACbenchmark.py provides examples of how the functions
 within DIRACbenchmark.py can be used by other Python programs.
-
 DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
-    copies = 1
+    copies = None
     iterations = 1
     extraIteration = False
 
@@ -292,7 +282,6 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
             result["geometric_mean"],
             result["median"],
         )
-
         print(" ".join([str(i) for i in result["raw"]]))
         sys.exit(0)
 
@@ -306,5 +295,5 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         result["geometric_mean"],
         result["median"],
     )
-    print("'k ".join([str(i) for i in result["raw"]]))
+    print(" ".join([str(i) for i in result["raw"]]))
     sys.exit(0)
