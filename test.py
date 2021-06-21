@@ -18,6 +18,7 @@ import pytest
         ("jobslot", 2, True),
         (2, 1, False),
         (2, 2, True),
+        (2, 2, True),
     ],
 )
 def testDIRACbenchmark(copies, iterations, extraIteration):
@@ -27,7 +28,10 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         result = singleDiracBenchmark()["NORM"]
         result2 = singleDiracBenchmark()["NORM"]
 
-        assert result2 == result or result2 - result <= 1 or result - result2 <= 1
+        if result2 <= result:
+        	assert result - result2 <= result2*20/100
+        else:
+        	assert result2 - result <= result*20/100
         assert result >= 0
         assert result < 100
 
@@ -44,11 +48,10 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert (
-                result2["raw"][k] == i
-                or result2["raw"][k] - i <= 1
-                or i - result2["raw"][k] <= 1
-            )
+          if result2["raw"][k] <= i:
+        	  assert i - result2["raw"][k] <= result2["raw"][k]*20/100
+          else:
+            assert result2["raw"][k] - i <= i*20/100
             assert i >= 0
             assert i < 100
             k = k + 1
@@ -66,11 +69,10 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert (
-                result2["raw"][k] == i
-                or result2["raw"][k] - i <= 1
-                or i - result2["raw"][k] <= 1
-            )
+          if result2["raw"][k] <= i:
+        	  assert i - result2["raw"][k] <= result2["raw"][k]*20/100
+          else:
+            assert result2["raw"][k] - i <= i*20/100
             assert i >= 0
             assert i < 100
             k = k + 1
@@ -84,7 +86,7 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         result = multipleDiracBenchmark(
             copies=int(copies), iterations=iterations, extraIteration=extraIteration
         )
-        result = multipleDiracBenchmark(
+        result2 = multipleDiracBenchmark(
             copies=int(copies), iterations=iterations, extraIteration=extraIteration
         )
 
@@ -93,11 +95,10 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert (
-                result2["raw"][k] == i
-                or result2["raw"][k] - i <= 1
-                or i - result2["raw"][k] <= 1
-            )
+          if result2["raw"][k] <= i:
+        	  assert i - result2["raw"][k] <= result2["raw"][k]*20/100
+          else:
+            assert result2["raw"][k] - i <= i*20/100
             assert i >= 0
             assert i < 100
             k = k + 1
