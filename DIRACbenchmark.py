@@ -244,7 +244,7 @@ within DIRACbenchmark.py can be used by other Python programs.
 DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
-    copies = None
+    copies = 1
     iterations = 1
     extraIteration = False
 
@@ -292,6 +292,7 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
             result["geometric_mean"],
             result["median"],
         )
+
         print(" ".join([str(i) for i in result["raw"]]))
         sys.exit(0)
 
@@ -305,5 +306,5 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         result["geometric_mean"],
         result["median"],
     )
-    print(" ".join([str(i) for i in result["raw"]]))
+    print("'k ".join([str(i) for i in result["raw"]]))
     sys.exit(0)
