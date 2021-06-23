@@ -1,5 +1,3 @@
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
 import pytest
 
@@ -10,7 +8,7 @@ from DIRACbenchmark import wholenodeDiracBenchmark
 
 
 @pytest.mark.parametrize(
-    "copies, iterations, extraIteration",
+    "copies, iterations, extra_iteration",
     [
         ("single", 1, False),
         ("single", 2, True),
@@ -22,7 +20,7 @@ from DIRACbenchmark import wholenodeDiracBenchmark
         (3, 2, True),
     ],
 )
-def testDIRACbenchmark(copies, iterations, extraIteration):
+def test_dirac_benchmark(copies, iterations, extra_iteration):
     k = 0
 
     if copies is None or copies == "single":
@@ -38,13 +36,13 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
 
     elif copies == "wholenode":
         result = wholenodeDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+            iterations=iterations, extraIteration=extra_iteration
         )
         result2 = wholenodeDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+            iterations=iterations, extraIteration=extra_iteration
         )
         result3 = wholenodeDiracBenchmark(
-            iterations=iterations + 1, extraIteration=extraIteration
+            iterations=iterations + 1, extraIteration=extra_iteration
         )
 
         assert result["geometric_mean"] >= 0 and result["geometric_mean"] < 100
@@ -66,13 +64,13 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
 
     elif copies == "jobslot":
         result = jobslotDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+            iterations=iterations, extraIteration=extra_iteration
         )
         result2 = jobslotDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+            iterations=iterations, extraIteration=extra_iteration
         )
         result3 = jobslotDiracBenchmark(
-            iterations=iterations + 1, extraIteration=extraIteration
+            iterations=iterations + 1, extraIteration=extra_iteration
         )
 
         assert result["geometric_mean"] >= 0 and result["geometric_mean"] < 100
@@ -93,13 +91,13 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
             k = k + 1
     else:
         result = multipleDiracBenchmark(
-            copies=int(copies), iterations=iterations, extraIteration=extraIteration
+            copies=int(copies), iterations=iterations, extraIteration=extra_iteration
         )
         result2 = multipleDiracBenchmark(
-            copies=int(copies), iterations=iterations, extraIteration=extraIteration
+            copies=int(copies), iterations=iterations, extraIteration=extra_iteration
         )
         result3 = multipleDiracBenchmark(
-            copies=int(copies), iterations=iterations + 1, extraIteration=extraIteration
+            copies=int(copies), iterations=iterations + 1, extraIteration=extra_iteration
         )
 
         assert result["geometric_mean"] >= 0 and result["geometric_mean"] < 100
