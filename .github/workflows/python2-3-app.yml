@@ -29,7 +29,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Pylint
       run: |
-        pylint test.py --max-statements=100
+        pylint test.py --max-statements=100 --disable=C0114
     - name: Test with pytest
       run: |
         pylint DIRACbenchmark.py
