@@ -1,10 +1,12 @@
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-
-
-from DIRACbenchmark import *
 import pytest
+
+from DIRACbenchmark import singleDiracBenchmark
+from DIRACbenchmark import multipleDiracBenchmark
+from DIRACbenchmark import jobslotDiracBenchmark
+from DIRACbenchmark import wholenodeDiracBenchmark
 
 
 @pytest.mark.parametrize(
@@ -50,10 +52,10 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-          assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
-          assert i >= 0
-          assert i < 100
-          k = k + 1
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert i >= 0
+            assert i < 100
+            k = k + 1
 
         k = 0
         for i in result2["raw"]:
@@ -78,17 +80,17 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-          assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
-          assert i >= 0
-          assert i < 100
-          k = k + 1
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert i >= 0
+            assert i < 100
+            k = k + 1
 
         k = 0
         for i in result2["raw"]:
-          assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
-          assert i >= 0
-          assert i < 100
-          k = k + 1
+            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
+            assert i >= 0
+            assert i < 100
+            k = k + 1
     else:
         result = multipleDiracBenchmark(
             copies=int(copies), iterations=iterations, extraIteration=extraIteration
@@ -105,14 +107,14 @@ def testDIRACbenchmark(copies, iterations, extraIteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-          assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
-          assert i >= 0
-          assert i < 100
-          k = k + 1
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert i >= 0
+            assert i < 100
+            k = k + 1
 
         k = 0
         for i in result2["raw"]:
-          assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
-          assert i >= 0
-          assert i < 100
-          k = k + 1
+            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
+            assert i >= 0
+            assert i < 100
+            k = k + 1
