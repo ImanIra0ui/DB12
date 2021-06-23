@@ -32,5 +32,4 @@ jobs:
         pylint test.py --max-statements=100 --disable=C0114 --disable=C0116
     - name: Test with pytest
       run: |
-        pylint DIRACbenchmark.py
         pytest test.py
