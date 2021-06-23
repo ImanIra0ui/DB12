@@ -37,6 +37,7 @@ jobs:
     - name: Pylint
       run: |
         pylint test.py --max-statements=100 --disable=C0114 --disable=C0116
+        pylint DIRACbenchmark.py --exit-zero #treating styling errors etc.. as warnings
 
     - name: Test with pytest
       run: |
