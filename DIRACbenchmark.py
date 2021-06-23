@@ -1,9 +1,3 @@
-#!/usr/bin/python
-
-########################################################################
-# File :    DIRACbenchmark.py
-# Author :  Andrew McNab
-########################################################################
 
 """ DIRAC Benchmark 2012 by Ricardo Graciani, and wrapper functions to
     run multiple copies in parallel by Andrew McNab.
