@@ -12,7 +12,9 @@ import pytest
     [
         ("single", 1, False),
         ("single", 2, True),
-
+        ("wholenode", 1, False),
+        ("wholenode", 2, True),
+        ("jobslot", 1, False),
         ("jobslot", 2, True),
         (2, 1, False),
         (3, 2, True),
