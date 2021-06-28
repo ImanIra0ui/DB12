@@ -22,7 +22,6 @@ jobs:
     - name: Set up Conda and Install dependencies
       run: |
         conda create -c conda-forge -c free -n python python=${{ matrix.python-version }}
-        conda info --env
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
         pip install -r requirements.txt
@@ -31,8 +30,8 @@ jobs:
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        pylint test.py --max-statements=100 --exit-zero
-        pylint DIRACbenchmark.py --exit-zero
+        pylint test.py --max-statements=100
+        pylint DIRACbenchmark.py
         
     - name: Test with pytest
       run: |
