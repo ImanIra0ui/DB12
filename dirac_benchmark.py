@@ -1,17 +1,12 @@
 
 """ DIRAC Benchmark 2012 by Ricardo Graciani, and wrapper functions to
     run multiple copies in parallel by Andrew McNab.
-    
     This file (DIRACbenchmark.py) is intended to be the ultimate upstream
     shared by different users of the DIRAC Benchmark 2012 (DB12). The
     canonical version can be found at https://github.com/DIRACGrid/DB12
-    
     This script can either be imported or run from the command line:
-    
     ./DIRACbenchmark.py NUMBER
-    
     where NUMBER gives the number of benchmark processes to run in parallel.
-    
     Run  ./DIRACbenchmark.py help  to see more options.
 """
 from __future__ import print_function
@@ -21,50 +16,54 @@ from __future__ import absolute_import
 import os
 import sys
 import random
-import urllib
 import multiprocessing
 
-version = "00.04 DB12"
+VERSION = "00.04 DB12"
 
 if sys.version_info > (3,):
-    long = int
-    from past.builtins import xrange
+    long = int # pylint: disable=invalid-name
+    xrange = range # pylint: disable=invalid-name
+    import urllib.request
+    urllib = urllib.request
+
+else:
+    import urllib
 
 
-def singleDiracBenchmark(iterations=1, measuredCopies=None):
+def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     """Get Normalized Power of one CPU in DIRAC Benchmark 2012 units (DB12)"""
 
     # This number of iterations corresponds to 1kHS2k.seconds, i.e. 250 HS06 seconds
 
-    n = int(1000 * 1000 * 12.5)
+    iters = int(1000 * 1000 * 12.5)
     calib = 250.0
 
-    m = long(0)
-    m2 = long(0)
-    p = 0
-    p2 = 0
+    m_1 = long(0)
+    m_2 = long(0)
+    p_1 = 0
+    p_2 = 0
     # Do one iteration extra to allow CPUs with variable speed (we ignore zeroth iteration)
     # Do one or more extra iterations to avoid tail effects when copies run in parallel
     i = 0
-    while (i <= iterations) or (
-        measuredCopies is not None and measuredCopies.value > 0
+    while (i <= iterations_num) or (
+        measured_copies is not None and measured_copies.value > 0
     ):
         if i == 1:
             start = os.times()
 
         # Now the iterations
-        for _j in xrange(n):
-            t = random.normalvariate(10, 1)
-            m += t
-            m2 += t * t
-            p += t
-            p2 += t * t
+        for _j in xrange(iters):
+            t_1 = random.normalvariate(10, 1)
+            m_1 += t_1
+            m_2 += t_1 * t_1
+            p_1 += t_1
+            p_2 += t_1 * t_1
 
-        if i == iterations:
+        if i == iterations_num:
             end = os.times()
-            if measuredCopies is not None:
+            if measured_copies is not None:
                 # Reduce the total of running copies by one
-                measuredCopies.value -= 1
+                measured_copies.value -= 1
 
         i += 1
 
@@ -78,64 +77,64 @@ def singleDiracBenchmark(iterations=1, measuredCopies=None):
     return {
         "CPU": cput,
         "WALL": wall,
-        "NORM": calib * iterations / cput,
+        "NORM": calib * iterations_num / cput,
         "UNIT": "DB12",
     }
 
 
-def singleDiracBenchmarkProcess(resultObject, iterations=1, measuredCopies=None):
+def single_dirac_benchmark_process(result_object, iterations_num=1, measured_copies=None):
 
     """Run singleDiracBenchmark() in a multiprocessing friendly way"""
 
-    benchmarkResult = singleDiracBenchmark(
-        iterations=iterations, measuredCopies=measuredCopies
+    benchmark_result = single_dirac_benchmark(
+        iterations_num=iterations_num, measured_copies=measured_copies
     )
 
-    if not benchmarkResult or "NORM" not in benchmarkResult:
-        return None
+    if not benchmark_result or "NORM" not in benchmark_result:
+        return
 
     # This makes it easy to use with multiprocessing.Process
-    resultObject.value = benchmarkResult["NORM"]
+    result_object.value = benchmark_result["NORM"]
 
 
-def multipleDiracBenchmark(copies=1, iterations=1, extraIteration=False):
+def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
 
     """Run multiple copies of the DIRAC Benchmark in parallel"""
 
     processes = []
     results = []
 
-    if extraIteration:
+    if extra_iter:
         # If true, then we run one or more extra iterations in each
         # copy until the number still being meausured is zero.
-        measuredCopies = multiprocessing.Value("i", copies)
+        measured_copies = multiprocessing.Value("i", copies)
     else:
-        measuredCopies = None
+        measured_copies = None
 
     # Set up all the subprocesses
     for i in xrange(copies):
         results.append(multiprocessing.Value("d", 0.0))
         processes.append(
             multiprocessing.Process(
-                target=singleDiracBenchmarkProcess,
-                args=(results[i], iterations, measuredCopies),
+                target=single_dirac_benchmark_process,
+                args=(results[i], iterations_num, measured_copies),
             )
         )
 
     # Start them all off at the same time
-    for p in processes:
-        p.start()
+    for process in processes:
+        process.start()
 
     # Wait for them all to finish
-    for p in processes:
-        p.join()
+    for process in processes:
+        process.join()
 
     raw = []
     product = 1.0
 
-    for result in results:
-        raw.append(result.value)
-        product *= result.value
+    for res in results:
+        raw.append(res.value)
+        product *= res.value
 
     raw.sort()
 
@@ -150,7 +149,7 @@ def multipleDiracBenchmark(copies=1, iterations=1, extraIteration=False):
     }
 
 
-def wholenodeDiracBenchmark(copies=None, iterations=1, extraIteration=False):
+def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 
     """Run as many copies as needed to occupy the whole machine"""
 
@@ -160,22 +159,22 @@ def wholenodeDiracBenchmark(copies=None, iterations=1, extraIteration=False):
             copies = int(
                 urllib.urlopen(os.environ["MACHINEFEATURES"] + "/total_cpu").read()
             )
-        except:
+        except: # pylint: disable=bare-except
             pass
 
     # If not given by caller or $MACHINEFEATURES/total_cpu then just count CPUs
     if copies is None:
         try:
             copies = multiprocessing.cpu_count()
-        except:
+        except: # pylint: disable=bare-except
             copies = 1
 
-    return multipleDiracBenchmark(
-        copies=copies, iterations=iterations, extraIteration=extraIteration
+    return multiple_dirac_benchmark(
+        copies=copies, iterations_num=iterations_num, extra_iter=extra_iter
     )
 
 
-def jobslotDiracBenchmark(copies=None, iterations=1, extraIteration=False):
+def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 
     """Run as many copies as needed to occupy the job slot"""
 
@@ -185,15 +184,15 @@ def jobslotDiracBenchmark(copies=None, iterations=1, extraIteration=False):
             copies = int(
                 urllib.urlopen(os.environ["JOBFEATURES"] + "/allocated_cpu").read()
             )
-        except:
+        except: # pylint:disable=bare-except
             pass
 
     # If not given by caller or $JOBFEATURES/allocated_cpu then just run one copy
     if copies is None:
         copies = 1
 
-    return multipleDiracBenchmark(
-        copies=copies, iterations=iterations, extraIteration=extraIteration
+    return multiple_dirac_benchmark(
+        copies=copies, iterations_num=iterations_num, extra_iter=extra_iter
     )
 
 
@@ -202,7 +201,7 @@ def jobslotDiracBenchmark(copies=None, iterations=1, extraIteration=False):
 #
 if __name__ == "__main__":
 
-    helpString = """DIRACbenchmark.py [--iterations ITERATIONS] [--extra-iteration]
+    HELP_STRING = """DIRACbenchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
 Uses the functions within DIRACbenchmark.py to run the DB12 benchmark from the 
 command line.
@@ -228,32 +227,32 @@ within DIRACbenchmark.py can be used by other Python programs.
 DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
-    copies = None
-    iterations = 1
-    extraIteration = False
+    COPIES = None
+    ITERATIONS = 1
+    EXTRA_ITERATION = False
 
     for arg in sys.argv[1:]:
         if arg.startswith("--iterations="):
-            iterations = int(arg[13:])
+            ITERATIONS = int(arg[13:])
         elif arg == "--extra-iteration":
-            extraIteration = True
-        elif arg == "--help" or arg == "help":
-            print(helpString)
+            EXTRA_ITERATION = True
+        elif arg in ("--help", "help"):
+            print(HELP_STRING)
             sys.exit(0)
         elif not arg.startswith("--"):
-            copies = arg
+            COPIES = arg
 
-    if copies == "version":
-        print(version)
+    if COPIES == "version":
+        print(VERSION)
         sys.exit(0)
 
-    if copies is None or copies == "single":
-        print(singleDiracBenchmark()["NORM"])
+    if COPIES is None or COPIES == "single":
+        print(single_dirac_benchmark()["NORM"])
         sys.exit(0)
 
-    if copies == "wholenode":
-        result = wholenodeDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+    if COPIES == "wholenode":
+        result = wholenode_dirac_benchmark(
+            iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
         )
         print(
             result["copies"],
@@ -265,9 +264,9 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         print(" ".join([str(i) for i in result["raw"]]))
         sys.exit(0)
 
-    if copies == "jobslot":
-        result = jobslotDiracBenchmark(
-            iterations=iterations, extraIteration=extraIteration
+    if COPIES == "jobslot":
+        result = jobslot_dirac_benchmark(
+            iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
         )
         print(
             result["copies"],
@@ -279,8 +278,8 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         print(" ".join([str(i) for i in result["raw"]]))
         sys.exit(0)
 
-    result = multipleDiracBenchmark(
-        copies=int(copies), iterations=iterations, extraIteration=extraIteration
+    result = multiple_dirac_benchmark(
+        copies=int(COPIES), iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
     )
     print(
         result["copies"],
