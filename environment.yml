@@ -1,0 +1,11 @@
+name: python
+
+channels:
+  - diracgrid
+  - conda-forge
+  - defaults
+  
+dependencies:
+  - pytest
+  - pylint
+  - future
