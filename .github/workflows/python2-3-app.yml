@@ -31,7 +31,7 @@ jobs:
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
         pylint test.py --max-statements=100
-        pylint DIRACbenchmark.py
+        pylint dirac_benchmark.py
         
     - name: Test with pytest
       run: |
