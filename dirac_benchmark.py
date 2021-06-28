@@ -20,7 +20,7 @@ import multiprocessing
 
 VERSION = "00.04 DB12"
 
-if sys.version_info > (3,):
+if sys.version_info[0] >= 3:
     long = int # pylint: disable=invalid-name
     xrange = range # pylint: disable=invalid-name
     import urllib.request
@@ -46,7 +46,7 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     # Do one or more extra iterations to avoid tail effects when copies run in parallel
     i = 0
     while (i <= iterations_num) or (
-        measured_copies is not None and measured_copies.value > 0
+            measured_copies is not None and measured_copies.value > 0
     ):
         if i == 1:
             start = os.times()
@@ -251,42 +251,42 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         sys.exit(0)
 
     if COPIES == "wholenode":
-        result = wholenode_dirac_benchmark(
+        RESULT = wholenode_dirac_benchmark(
             iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
         )
         print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
+            RESULT["copies"],
+            RESULT["sum"],
+            RESULT["arithmetic_mean"],
+            RESULT["geometric_mean"],
+            RESULT["median"],
         )
-        print(" ".join([str(i) for i in result["raw"]]))
+        print(" ".join([str(j) for j in RESULT["raw"]]))
         sys.exit(0)
 
     if COPIES == "jobslot":
-        result = jobslot_dirac_benchmark(
+        RESULT = jobslot_dirac_benchmark(
             iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
         )
         print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
+            RESULT["copies"],
+            RESULT["sum"],
+            RESULT["arithmetic_mean"],
+            RESULT["geometric_mean"],
+            RESULT["median"],
         )
-        print(" ".join([str(i) for i in result["raw"]]))
+        print(" ".join([str(j) for j in RESULT["raw"]]))
         sys.exit(0)
 
-    result = multiple_dirac_benchmark(
+    RESULT = multiple_dirac_benchmark(
         copies=int(COPIES), iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
     )
     print(
-        result["copies"],
-        result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
+        RESULT["copies"],
+        RESULT["sum"],
+        RESULT["arithmetic_mean"],
+        RESULT["geometric_mean"],
+        RESULT["median"],
     )
-    print(" ".join([str(i) for i in result["raw"]]))
+    print(" ".join([str(i) for i in RESULT["raw"]]))
     sys.exit(0)

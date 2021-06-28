@@ -30,8 +30,8 @@ jobs:
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        pylint test.py --max-statements=100
-        pylint dirac_benchmark.py
+        pylint test.py --max-statements=100 --exit-zero
+        pylint dirac_benchmark.py --exit-zero
         
     - name: Test with pytest
       run: |
