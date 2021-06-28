@@ -1,5 +1,7 @@
 """Unit test for DB12"""
 from __future__ import absolute_import
+from __future__ import division
+
 import pytest
 
 from dirac_benchmark import single_dirac_benchmark
