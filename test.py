@@ -6,6 +6,11 @@ from DIRACbenchmark import multipleDiracBenchmark
 from DIRACbenchmark import jobslotDiracBenchmark
 from DIRACbenchmark import wholenodeDiracBenchmark
 
+""" 
+Testing each function in the DB12 to make sure that:
+1- It produces the same output when run with the same input
+2- It produces the same output when run with a different number of iterations
+"""
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
@@ -20,16 +25,18 @@ from DIRACbenchmark import wholenodeDiracBenchmark
         (3, 2, True),
     ],
 )
+
 def test_dirac_benchmark(copies, iterations, extra_iteration):
     k = 0
+    threshold = 20/100
 
     if copies is None or copies == "single":
         result = singleDiracBenchmark(iterations=iterations)["NORM"]
         result2 = singleDiracBenchmark(iterations=iterations)["NORM"]
         result3 = singleDiracBenchmark(iterations=iterations + 1)["NORM"]
 
-        assert abs(result2 - result) <= result * 20 / 100
-        assert abs(result3 - result) <= result * 20 / 100
+        assert abs(result2 - result) <= result * threshold
+        assert abs(result3 - result) <= result * threshold
 
         assert result >= 0
         assert result < 100
@@ -50,14 +57,14 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
 
         k = 0
         for i in result2["raw"]:
-            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
+            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
@@ -78,14 +85,14 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
 
         k = 0
         for i in result2["raw"]:
-            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
+            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
@@ -105,14 +112,14 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
         assert result["median"] >= 0 and result["median"] < 100
 
         for i in result["raw"]:
-            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * 20 / 100
+            assert abs(i - result2["raw"][k]) <= result2["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
 
         k = 0
         for i in result2["raw"]:
-            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * 20 / 100
+            assert abs(i - result3["raw"][k]) <= result3["raw"][k] * threshold
             assert i >= 0
             assert i < 100
             k = k + 1
