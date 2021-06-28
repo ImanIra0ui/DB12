@@ -21,8 +21,9 @@ import multiprocessing
 VERSION = "00.04 DB12"
 
 if sys.version_info[0] >= 3:
-    long = int # pylint: disable=invalid-name
-    xrange = range # pylint: disable=invalid-name
+    #pylint: disable = E, W, R, C
+    long = int 
+    xrange = range
     import urllib.request
     urllib = urllib.request
 
@@ -44,11 +45,11 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     p_2 = 0
     # Do one iteration extra to allow CPUs with variable speed (we ignore zeroth iteration)
     # Do one or more extra iterations to avoid tail effects when copies run in parallel
-    i = 0
-    while (i <= iterations_num) or (
+    it_1 = 0
+    while (it_1 <= iterations_num) or (
             measured_copies is not None and measured_copies.value > 0
     ):
-        if i == 1:
+        if it_1 == 1:
             start = os.times()
 
         # Now the iterations
@@ -59,13 +60,13 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
             p_1 += t_1
             p_2 += t_1 * t_1
 
-        if i == iterations_num:
+        if it_1 == iterations_num:
             end = os.times()
             if measured_copies is not None:
                 # Reduce the total of running copies by one
                 measured_copies.value -= 1
 
-        i += 1
+        it_1 += 1
 
     cput = sum(end[:4]) - sum(start[:4])
     wall = end[4] - start[4]
@@ -288,5 +289,5 @@ DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         RESULT["geometric_mean"],
         RESULT["median"],
     )
-    print(" ".join([str(i) for i in RESULT["raw"]]))
+    print(" ".join([str(k) for k in RESULT["raw"]]))
     sys.exit(0)
