@@ -4,6 +4,7 @@ from __future__ import division
 
 import pytest
 
+#pylint: disable=import-error
 from DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
 from DIRACbenchmark.dirac_benchmark import multiple_dirac_benchmark
 from DIRACbenchmark.dirac_benchmark import jobslot_dirac_benchmark
