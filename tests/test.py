@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 from __future__ import division
 
-import pytest
+#import pytest
 
 #pylint: disable=import-error
 from DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
