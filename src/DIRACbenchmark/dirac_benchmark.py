@@ -157,9 +157,10 @@ def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
     # Try $MACHINEFEATURES first if not given by caller
     if copies is None and "MACHINEFEATURES" in os.environ:
         try:
-            copies = int(
-                urllib.urlopen(os.environ["MACHINEFEATURES"] + "/total_cpu").read()
-            )
+            with urllib.urlopen(os.environ["MACHINEFEATURES"] + "/total_cpu") as file_2:
+                copies = int(
+                    file_2.read()
+                )
         except: # pylint: disable=bare-except
             pass
 
@@ -182,9 +183,10 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
     # Try $JOBFEATURES first if not given by caller
     if copies is None and "JOBFEATURES" in os.environ:
         try:
-            copies = int(
-                urllib.urlopen(os.environ["JOBFEATURES"] + "/allocated_cpu").read()
-            )
+            with urllib.urlopen(os.environ["JOBFEATURES"] + "/allocated_cpu") as file_1:
+                copies = int(
+                    file_1.read()
+                )
         except: # pylint:disable=bare-except
             pass
 
