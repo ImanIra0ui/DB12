@@ -4,10 +4,10 @@ from __future__ import division
 
 import pytest
 
-from dirac_benchmark import single_dirac_benchmark
-from dirac_benchmark import multiple_dirac_benchmark
-from dirac_benchmark import jobslot_dirac_benchmark
-from dirac_benchmark import wholenode_dirac_benchmark
+from DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
+from DIRACbenchmark.dirac_benchmark import multiple_dirac_benchmark
+from DIRACbenchmark.dirac_benchmark import jobslot_dirac_benchmark
+from DIRACbenchmark.dirac_benchmark import wholenode_dirac_benchmark
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
