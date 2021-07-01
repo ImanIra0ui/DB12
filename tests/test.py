@@ -2,13 +2,11 @@
 from __future__ import absolute_import
 from __future__ import division
 import sys
+import os
 import pytest
 
 sys.path.append("..")
 
-#pylint: disable=import-error
-#pylint: disable=wrong-import-order
-#pylint: disable=wrong-import-position
 from src.DIRACbenchmark.dirac_benchmark import jobslot_dirac_benchmark
 from src.DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
 from src.DIRACbenchmark.dirac_benchmark import wholenode_dirac_benchmark
