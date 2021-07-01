@@ -1,14 +1,18 @@
 """Unit test for DB12"""
 from __future__ import absolute_import
 from __future__ import division
-
+import sys
 import pytest
 
+sys.path.append("..")
+
 #pylint: disable=import-error
-from DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
-from DIRACbenchmark.dirac_benchmark import multiple_dirac_benchmark
-from DIRACbenchmark.dirac_benchmark import jobslot_dirac_benchmark
-from DIRACbenchmark.dirac_benchmark import wholenode_dirac_benchmark
+#pylint: disable=wrong-import-order
+#pylint: disable=wrong-import-position
+from src.DIRACbenchmark.dirac_benchmark import jobslot_dirac_benchmark
+from src.DIRACbenchmark.dirac_benchmark import single_dirac_benchmark
+from src.DIRACbenchmark.dirac_benchmark import wholenode_dirac_benchmark
+from src.DIRACbenchmark.dirac_benchmark import multiple_dirac_benchmark
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
