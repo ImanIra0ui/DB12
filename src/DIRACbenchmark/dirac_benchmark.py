@@ -1,13 +1,13 @@
 
 """ DIRAC Benchmark 2012 by Ricardo Graciani, and wrapper functions to
     run multiple copies in parallel by Andrew McNab.
-    This file (DIRACbenchmark.py) is intended to be the ultimate upstream
+    This file (dirac_benchmark.py) is intended to be the ultimate upstream
     shared by different users of the DIRAC Benchmark 2012 (DB12). The
     canonical version can be found at https://github.com/DIRACGrid/DB12
     This script can either be imported or run from the command line:
-    ./DIRACbenchmark.py NUMBER
+    ./dirac_benchmark.py NUMBER
     where NUMBER gives the number of benchmark processes to run in parallel.
-    Run  ./DIRACbenchmark.py help  to see more options.
+    Run  ./dirac_benchmark.py help  to see more options.
 """
 from __future__ import print_function
 from __future__ import division
@@ -18,7 +18,7 @@ import sys
 import random
 import multiprocessing
 
-VERSION = "00.04 DB12"
+VERSION = "1.0.0 DB12"
 
 if sys.version_info[0] >= 3:
     #pylint: disable = E, W, R, C
@@ -85,7 +85,7 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
 
 def single_dirac_benchmark_process(result_object, iterations_num=1, measured_copies=None):
 
-    """Run singleDiracBenchmark() in a multiprocessing friendly way"""
+    """Run single_dirac_benchmark() in a multiprocessing friendly way"""
 
     benchmark_result = single_dirac_benchmark(
         iterations_num=iterations_num, measured_copies=measured_copies
@@ -154,17 +154,7 @@ def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 
     """Run as many copies as needed to occupy the whole machine"""
 
-    # Try $MACHINEFEATURES first if not given by caller
-    if copies is None and "MACHINEFEATURES" in os.environ:
-        try:
-            with urllib.urlopen(os.environ["MACHINEFEATURES"] + "/total_cpu") as file_2:
-                copies = int(
-                    file_2.read()
-                )
-        except: # pylint: disable=bare-except
-            pass
-
-    # If not given by caller or $MACHINEFEATURES/total_cpu then just count CPUs
+    # If not given by caller then just count CPUs
     if copies is None:
         try:
             copies = multiprocessing.cpu_count()
@@ -180,17 +170,7 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 
     """Run as many copies as needed to occupy the job slot"""
 
-    # Try $JOBFEATURES first if not given by caller
-    if copies is None and "JOBFEATURES" in os.environ:
-        try:
-            with urllib.urlopen(os.environ["JOBFEATURES"] + "/allocated_cpu") as file_1:
-                copies = int(
-                    file_1.read()
-                )
-        except: # pylint:disable=bare-except
-            pass
-
-    # If not given by caller or $JOBFEATURES/allocated_cpu then just run one copy
+    # If not given by caller then just run one copy
     if copies is None:
         copies = 1
 
@@ -204,9 +184,9 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 #
 if __name__ == "__main__":
 
-    HELP_STRING = """DIRACbenchmark.py [--iterations ITERATIONS] [--extra-iteration]
+    HELP_STRING = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
-Uses the functions within DIRACbenchmark.py to run the DB12 benchmark from the 
+Uses the functions within dirac_benchmark.py to run the DB12 benchmark from the 
 command line.
 By default one benchmarking iteration is run, in addition to the initial 
 iteration which DB12 runs and ignores to avoid ramp-up effects at the start.
@@ -225,9 +205,9 @@ two lines on stdout:
 COPIES SUM ARITHMETIC-MEAN GEOMETRIC-MEAN MEDIAN
 RAW-RESULTS
 The tokens "version" and "help" print information about the script.
-The source code of DIRACbenchmark.py provides examples of how the functions
-within DIRACbenchmark.py can be used by other Python programs.
-DIRACbenchmark.py is distributed from  https://github.com/DIRACGrid/DB12
+The source code of dirac_benchmark.py provides examples of how the functions
+within dirac_benchmark.py can be used by other Python programs.
+dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
     COPIES = None

@@ -1,8 +1,6 @@
 name: python
 
 channels:
-  - diracgrid
-  - conda-forge
   - defaults
   
 dependencies:

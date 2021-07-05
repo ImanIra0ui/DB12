@@ -26,14 +26,14 @@ jobs:
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        pylint tests/test.py --max-statements=100
+        pylint tests/unit_test.py --max-statements=100
         pylint src/DIRACbenchmark/dirac_benchmark.py
         
     - name: Test with pytest
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        pytest tests/test.py
+        pytest tests
         
     - name: Install pypa/build
       run: >-
