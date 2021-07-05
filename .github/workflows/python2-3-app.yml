@@ -34,3 +34,12 @@ jobs:
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
         pytest tests
+        
+    - uses: actions/checkout@v2
+    - name: Artifacts for integration test
+      run: python src/DIRACbenchmark/dirac_benchmark.py > result_python${{ matrix.python-version }}.txt
+  
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Integration test 
+        path: result_python${{ matrix.python-version }}.txt
