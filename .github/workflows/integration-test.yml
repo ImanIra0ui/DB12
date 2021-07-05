@@ -32,19 +32,13 @@ jobs:
         
         difference1=$(awk '{print $1-$2}' <<< "$result1 $result3")
         difference2=$(awk '{print $1-$2}' <<< "$result2 $result3")
+                
+        if (( $(echo $difference1#- $product | awk '{if ($1 > $2) print 1;}') )); 
+          then echo "no"; 
+        else echo "The results provided by python 2.7 and python 3.6 are the same within the threshold"; 
+          fi
         
-        #Seeing if the difference between the results is less than the allowed threshold
-        
-        if [${difference1#-} -gt ${th}]
-          then
-            echo "yes"
-          else
-            echo "no"
-        fi
-        
-        if [${difference2#-} -gt ${th}]
-          then
-            echo "yes"
-          else
-            echo "no"
-        fi
+        if (( $(echo $difference2#- $product | awk '{if ($1 > $2) print 1;}') )); 
+          then echo "no"; 
+        else echo "The results provided by python 2.7 and python 3.9 are the same within the threshold"; 
+          fi
