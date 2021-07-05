@@ -26,8 +26,8 @@ jobs:
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        pylint tests/unit_test.py --max-statements=100
-        pylint src/DIRACbenchmark/dirac_benchmark.py
+        list="$(find . -name \*.py -and -not -name '__init*' )"
+        for file in $list; do pylint $file --max-statements=100; done
         
     - name: Test with pytest
       run: |
