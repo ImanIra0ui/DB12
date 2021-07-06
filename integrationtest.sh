@@ -1,21 +1,25 @@
 #!/bin/bash
 
-result1=$(cat result_python3.6.txt)
-result2=$(cat result_python3.9.txt)
-result3=$(cat result_python2.7.txt)
+list="$(find . -name 'result*')"
 
-threshold=$(awk '{print $1/$2}' <<< "20 100")
-product=$(awk '{print $1*$2}' <<< "$result3 $threshold")
+for file in $list
+do
+  for file2 in $list; 
+  do 
+    if [[ $file != $file2 ]]; then
+      result1=$(cat $file)
+      result2=$(cat $file2)
 
-difference1=$(awk '{print $1-$2}' <<< "$result1 $result3")
-difference2=$(awk '{print $1-$2}' <<< "$result2 $result3")
+      threshold=$(awk '{print $1/$2}' <<< "20 100")
+      product=$(awk '{print $1*$2}' <<< "$result1 $threshold")
 
-if (( $(echo $difference1#- $product | awk '{if ($1 > $2) print 1;}') )); 
-  then echo "The results provided by python 2.7 and python 3.6 are not the same"; 
-else echo "The results provided by python 2.7 and python 3.6 are the same within the threshold"; 
-  fi
+      difference1=$(awk '{print $1-$2}' <<< "$result1 $result2")
 
-if (( $(echo $difference2#- $product | awk '{if ($1 > $2) print 1;}') )); 
-  then echo "The results provided by python 2.7 and python 3.9 are not the same"; 
-else echo "The results provided by python 2.7 and python 3.9 are the same within the threshold"; 
-  fi
+      if (( $(echo $difference1#- $product | awk '{if ($1 > $2) print 1;}') )); 
+        then echo "The results provided by $file and $file2 are not the same"; 
+      else echo "The results provided by $file and $file2 are the same within the threshold"; 
+        fi
+      fi
+   done
+done
+
