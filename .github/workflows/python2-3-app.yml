@@ -26,7 +26,7 @@ jobs:
       run: |
         source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate python
-        list="$(find . -name \*.py -and -not -name '__init*' )"
+        list="$(find . -name \*.py -and -not -name '__init*' -and -not -name 'setup*')"
         for file in $list; do pylint $file --max-statements=100; done
         
     - name: Test with pytest
