@@ -179,7 +179,8 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
     )
 
 def main():
-    HELP_STRING = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
+    "Main function"
+    help_string = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
 Uses the functions within dirac_benchmark.py to run the DB12 benchmark from the 
 command line.
@@ -205,68 +206,68 @@ within dirac_benchmark.py can be used by other Python programs.
 dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
-    COPIES = None
-    ITERATIONS = 1
-    EXTRA_ITERATION = False
+    copies = None
+    iterations = 1
+    extra_iteration = False
 
     for arg in sys.argv[1:]:
         if arg.startswith("--iterations="):
-            ITERATIONS = int(arg[13:])
+            iterations = int(arg[13:])
         elif arg == "--extra-iteration":
-            EXTRA_ITERATION = True
+            extra_iteration = True
         elif arg in ("--help", "help"):
-            print(HELP_STRING)
+            print(help_string)
             sys.exit(0)
         elif not arg.startswith("--"):
-            COPIES = arg
+            copies = arg
 
-    if COPIES == "version":
+    if copies == "version":
         print(VERSION)
         sys.exit(0)
 
-    if COPIES is None or COPIES == "single":
+    if copies is None or copies == "single":
         print(single_dirac_benchmark()["NORM"])
         sys.exit(0)
 
-    if COPIES == "wholenode":
-        RESULT = wholenode_dirac_benchmark(
-            iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
+    if copies == "wholenode":
+        result = wholenode_dirac_benchmark(
+            iterations_num=iterations, extra_iter=extra_iteration
         )
         print(
-            RESULT["copies"],
-            RESULT["sum"],
-            RESULT["arithmetic_mean"],
-            RESULT["geometric_mean"],
-            RESULT["median"],
+            result["copies"],
+            result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
         )
-        print(" ".join([str(j) for j in RESULT["raw"]]))
+        print(" ".join([str(j) for j in result["raw"]]))
         sys.exit(0)
 
-    if COPIES == "jobslot":
-        RESULT = jobslot_dirac_benchmark(
-            iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
+    if copies == "jobslot":
+        result = jobslot_dirac_benchmark(
+            iterations_num=iterations, extra_iter=extra_iteration
         )
         print(
-            RESULT["copies"],
-            RESULT["sum"],
-            RESULT["arithmetic_mean"],
-            RESULT["geometric_mean"],
-            RESULT["median"],
+            result["copies"],
+            result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
         )
-        print(" ".join([str(j) for j in RESULT["raw"]]))
+        print(" ".join([str(j) for j in result["raw"]]))
         sys.exit(0)
 
-    RESULT = multiple_dirac_benchmark(
-        copies=int(COPIES), iterations_num=ITERATIONS, extra_iter=EXTRA_ITERATION
+    result = multiple_dirac_benchmark(
+        copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
     )
     print(
-        RESULT["copies"],
-        RESULT["sum"],
-        RESULT["arithmetic_mean"],
-        RESULT["geometric_mean"],
-        RESULT["median"],
+        result["copies"],
+        result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
     )
-    print(" ".join([str(k) for k in RESULT["raw"]]))
+    print(" ".join([str(k) for k in result["raw"]]))
     sys.exit(0)
 
 #
