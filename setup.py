@@ -22,4 +22,9 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=2.7",
+    entry_points={
+    'console_scripts': [
+        'db12 = DIRACbenchmark.dirac_benchmark:main',
+    ],
+},
 )
