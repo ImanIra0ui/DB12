@@ -178,12 +178,7 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
         copies=copies, iterations_num=iterations_num, extra_iter=extra_iter
     )
 
-
-#
-# If we run as a command
-#
-if __name__ == "__main__":
-
+def main():
     HELP_STRING = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
 Uses the functions within dirac_benchmark.py to run the DB12 benchmark from the 
@@ -273,3 +268,9 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     )
     print(" ".join([str(k) for k in RESULT["raw"]]))
     sys.exit(0)
+
+#
+# If we run as a command
+#
+if __name__ == "__main__":
+    main()
