@@ -4,7 +4,7 @@ from __future__ import division
 import pytest
 
 #pylint: disable=relative-beyond-top-level
-from ..src.DIRACbenchmark import dirac_benchmark
+from ..src.db12 import __main__
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
