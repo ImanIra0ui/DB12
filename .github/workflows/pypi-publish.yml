@@ -1,10 +1,6 @@
 name: Upload Package to Pypi
 
-on:
-  workflow_run:
-      workflows: ["Integration Test"]
-      types: 
-        - completed
+on: [push, pull_request]
 
 jobs:
   deploy:
@@ -22,7 +18,6 @@ jobs:
         pip install
         build
         --user
-
     - name: Build a binary wheel and a source tarball
       run: >-
         python -m
