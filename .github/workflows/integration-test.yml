@@ -1,6 +1,7 @@
 name: Integration Test
 
 on:
+  push:
   workflow_run:
       workflows: ["DB12 Testing"]
       types: 
@@ -22,5 +23,4 @@ jobs:
     
     - name: Comparing results
       shell: bash
-      if: startsWith(github.ref, 'refs/tags')
       run: bash tests/integrationtest.sh
