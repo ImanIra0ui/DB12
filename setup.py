@@ -25,7 +25,7 @@ setuptools.setup(
     test_suite="tests",
     entry_points={
     'console_scripts': [
-        'db12 = DIRACbenchmark.dirac_benchmark:main',
+        'db12 = db12.__main__:main',
     ],
 },
 )
