@@ -1,6 +1,10 @@
 name: Upload Package to Pypi
 
-on: [push, pull_request]
+on:
+  workflow_run:
+      workflows: ["Integration Test"]
+      types: 
+        - completed
 
 jobs:
   deploy:
