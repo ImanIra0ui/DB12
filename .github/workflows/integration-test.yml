@@ -1,7 +1,6 @@
 name: Integration Test
 
 on:
-  push:
   workflow_run:
       workflows: ["DB12 Testing"]
       types: 
