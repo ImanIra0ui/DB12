@@ -1,4 +1,5 @@
 #!/bin/bash
+#This script is intended to compare results provided by DB12 when run on different python versions to make sure that they are the same within a specified threshold.
 
 list="$(find . -name 'result*')"
 
@@ -16,10 +17,9 @@ do
       difference1=$(awk '{print $1-$2}' <<< "$result1 $result2")
 
       if (( $(echo $difference1#- $product | awk '{if ($1 > $2) print 1;}') )); 
-        then echo "The results provided by $file and $file2 are not the same"; 
+        then exit 1
       else echo "The results provided by $file and $file2 are the same within the threshold"; 
-        fi
       fi
+    fi
    done
 done
-
