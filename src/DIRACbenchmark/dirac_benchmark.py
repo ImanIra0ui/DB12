@@ -84,7 +84,6 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
 
 
 def single_dirac_benchmark_process(result_object, iterations_num=1, measured_copies=None):
-
     """Run single_dirac_benchmark() in a multiprocessing friendly way"""
 
     benchmark_result = single_dirac_benchmark(
@@ -150,7 +149,6 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
 
 
 def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
-
     """Run as many copies as needed to occupy the whole machine"""
 
     # If not given by caller then just count CPUs
