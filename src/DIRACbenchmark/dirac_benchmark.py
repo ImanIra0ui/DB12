@@ -99,7 +99,6 @@ def single_dirac_benchmark_process(result_object, iterations_num=1, measured_cop
 
 
 def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
-
     """Run multiple copies of the DIRAC Benchmark in parallel"""
 
     processes = []
