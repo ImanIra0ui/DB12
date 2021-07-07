@@ -166,7 +166,6 @@ def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
 
 
 def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
-
     """Run as many copies as needed to occupy the job slot"""
 
     # If not given by caller then just run one copy
