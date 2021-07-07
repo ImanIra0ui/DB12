@@ -22,4 +22,4 @@ jobs:
     
     - name: Comparing results
       shell: bash
-      run: bash tests/integrationtest.sh
+      run: bash tests/integration_test.sh
