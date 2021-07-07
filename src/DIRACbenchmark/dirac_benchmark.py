@@ -177,7 +177,7 @@ def jobslot_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
     )
 
 def main():
-    "Main function"
+    """Main function"""
     help_string = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
                   [COPIES|single|wholenode|jobslot|version|help] 
 Uses the functions within dirac_benchmark.py to run the DB12 benchmark from the 
