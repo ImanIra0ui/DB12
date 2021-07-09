@@ -4,9 +4,6 @@ from __future__ import division
 import pytest
 
 from db12 import smth
-from db12 import smth
-from db12 import smth
-from db12 import smth
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
