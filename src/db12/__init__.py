@@ -7,4 +7,4 @@ __all__ = [
     "jobslot_dirac_benchmark"
 ]
 
-import smth
+from .src.db12 import smth
