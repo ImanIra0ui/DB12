@@ -3,12 +3,15 @@ name: DB12 testing
 on: [push, pull_request]
 
 jobs:
-  build:
+  pytest:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: False
       matrix:
-        python-version: [3.6, 3.9, 2.7]
+        python_version:
+          - 2.7
+          - 3.6
+          - 3.9
         
     steps:
     - uses: actions/checkout@v2
