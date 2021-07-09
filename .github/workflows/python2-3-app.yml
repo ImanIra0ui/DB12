@@ -22,24 +22,15 @@ jobs:
         activate-environment: python
         environment-file: environment.yml
         
-    - name: Pylint
-      run: |
-        source /usr/share/miniconda/etc/profile.d/conda.sh
-        conda activate python
-        list="$(find . -name \*.py -and -not -name '__init*' -and -not -name 'setup*')"
-        for file in $list; do pylint $file --max-statements=100; done
-        
-    - name: Test with pytest
-      run: |
-        source /usr/share/miniconda/etc/profile.d/conda.sh
-        conda activate python
-        pytest tests
-        
     - uses: actions/checkout@v2
-    - name: Artifacts for integration test
-      run: python src/db12/__main__.py > result_python${{ matrix.python-version }}.txt
-  
-    - uses: actions/upload-artifact@v2
-      with:
-        name: Integration test 
-        path: result_python${{ matrix.python-version }}.txt
+    - name: Prepare environment
+      run: .github/workflows/prepare_environment.sh ${{ matrix.python_version }}
+    - name: Run pytest
+      run: |
+        . "${CONDA}/bin/activate" test-env
+        pytest
+        
+    - name: Run pylint
+      run: |
+        . "${CONDA}/bin/activate" test-env
+        pylint -E tests/unit_test.py
