@@ -3,8 +3,11 @@ from __future__ import absolute_import
 from __future__ import division
 import pytest
 
-#pylint: disable=relative-beyond-top-level
-from ..src.db12 import __main__
+from db12 import single_dirac_benchmark
+from db12 import multiple_dirac_benchmark
+from db12 import wholenode_dirac_benchmark
+from db12 import jobslot_dirac_benchmark
+
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
@@ -29,9 +32,9 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
     threshold = 20/100
 
     if copies is None or copies == "single":
-        result = __main__.single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result2 = __main__.single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result3 = __main__.single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
+        result = single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result2 = single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result3 = single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
 
         assert abs(result2 - result) <= result * threshold
         assert abs(result3 - result) <= result * threshold
