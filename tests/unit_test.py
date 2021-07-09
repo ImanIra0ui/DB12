@@ -4,6 +4,7 @@ from __future__ import division
 import pytest
 
 from db12 import smth
+from db12 import single_dirac_benchmark
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
