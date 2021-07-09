@@ -7,4 +7,4 @@ __all__ = [
     "jobslot_dirac_benchmark"
 ]
 
-from smth import *
+import smth
