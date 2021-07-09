@@ -31,9 +31,9 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
     threshold = 20/100
 
     if copies is None or copies == "single":
-        result = single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result2 = single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result3 = single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
+        result = smth.single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result2 = smth.single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result3 = smth.single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
 
         assert abs(result2 - result) <= result * threshold
         assert abs(result3 - result) <= result * threshold
@@ -42,13 +42,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
         assert result < 100
 
     elif copies == "wholenode":
-        result = __main__.wholenode_dirac_benchmark(
+        result = smth.wholenode_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = __main__.wholenode_dirac_benchmark(
+        result2 = smth.wholenode_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = __main__.wholenode_dirac_benchmark(
+        result3 = smth.wholenode_dirac_benchmark(
             iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 
@@ -70,13 +70,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
             k = k + 1
 
     elif copies == "jobslot":
-        result = __main__.jobslot_dirac_benchmark(
+        result = smth.jobslot_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = __main__.jobslot_dirac_benchmark(
+        result2 = smth.jobslot_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = __main__.jobslot_dirac_benchmark(
+        result3 = smth.jobslot_dirac_benchmark(
             iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 
@@ -97,13 +97,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
             assert i < 100
             k = k + 1
     else:
-        result = __main__.multiple_dirac_benchmark(
+        result = smth.multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = __main__.multiple_dirac_benchmark(
+        result2 = smth.multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = __main__.multiple_dirac_benchmark(
+        result3 = smth.multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 
