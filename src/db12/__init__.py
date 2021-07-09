@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from smth import *
 
 __all__ = [
     "single_dirac_benchmark",
@@ -7,3 +6,5 @@ __all__ = [
     "wholenode_dirac_benchmark",
     "jobslot_dirac_benchmark"
 ]
+
+import smth
