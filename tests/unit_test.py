@@ -3,10 +3,10 @@ from __future__ import absolute_import
 from __future__ import division
 import pytest
 
-from db12 import smth.single_dirac_benchmark
-from db12 import smth.multiple_dirac_benchmark
-from db12 import smth.wholenode_dirac_benchmark
-from db12 import smth.jobslot_dirac_benchmark
+from db12 import smth
+from db12 import smth
+from db12 import smth
+from db12 import smth
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
