@@ -1,5 +1,4 @@
-"""Contains all the functions needed to 
-run DB12"""
+"""Contains all the functions needed to run DB12"""
 
 from __future__ import print_function
 from __future__ import division
