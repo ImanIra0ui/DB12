@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 import pytest
 
-from db12 import __main__
+from db12 import benchmark
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
