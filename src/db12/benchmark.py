@@ -9,8 +9,6 @@ import sys
 import random
 import multiprocessing
 
-VERSION = "1.0.0 DB12"
-
 if sys.version_info[0] >= 3:
     #pylint: disable = E, W, R, C
     long = int 

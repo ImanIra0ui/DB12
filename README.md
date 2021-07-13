@@ -13,6 +13,6 @@ To install the DB12 package, run:
 
 # Using
 
-After installation, the package can be imported by typing `from DIRACbenchmark import dirac_benchmark`. 
+After installation, the package can be imported by typing `from db12 import single_dirac_benchmark`. 
 
 It can also be used directly from the terminal by executing the command `db12`.
