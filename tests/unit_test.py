@@ -3,7 +3,10 @@ from __future__ import absolute_import
 from __future__ import division
 import pytest
 
-from db12 import benchmark
+from db12 import single_dirac_benchmark
+from db12 import multiple_dirac_benchmark
+from db12 import wholenode_dirac_benchmark
+from db12 import jobslot_dirac_benchmark
 
 @pytest.mark.parametrize(
     "copies, iterations, extra_iteration",
@@ -28,9 +31,9 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
     threshold = 20/100
 
     if copies is None or copies == "single":
-        result = benchmark.single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result2 = benchmark.single_dirac_benchmark(iterations_num=iterations)["NORM"]
-        result3 = benchmark.single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
+        result = single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result2 = single_dirac_benchmark(iterations_num=iterations)["NORM"]
+        result3 = single_dirac_benchmark(iterations_num=iterations + 1)["NORM"]
 
         assert abs(result2 - result) <= result * threshold
         assert abs(result3 - result) <= result * threshold
@@ -39,13 +42,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
         assert result < 100
 
     elif copies == "wholenode":
-        result = benchmark.wholenode_dirac_benchmark(
+        result = wholenode_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = benchmark.wholenode_dirac_benchmark(
+        result2 = wholenode_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = benchmark.wholenode_dirac_benchmark(
+        result3 = wholenode_dirac_benchmark(
             iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 
@@ -67,13 +70,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
             k = k + 1
 
     elif copies == "jobslot":
-        result = benchmark.jobslot_dirac_benchmark(
+        result = jobslot_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = benchmark.jobslot_dirac_benchmark(
+        result2 = jobslot_dirac_benchmark(
             iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = benchmark.jobslot_dirac_benchmark(
+        result3 = jobslot_dirac_benchmark(
             iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 
@@ -94,13 +97,13 @@ def test_dirac_benchmark(copies, iterations, extra_iteration):
             assert i < 100
             k = k + 1
     else:
-        result = benchmark.multiple_dirac_benchmark(
+        result = multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
         )
-        result2 = benchmark.multiple_dirac_benchmark(
+        result2 = multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
         )
-        result3 = benchmark.multiple_dirac_benchmark(
+        result3 = multiple_dirac_benchmark(
             copies=int(copies), iterations_num=iterations + 1, extra_iter=extra_iteration
         )
 

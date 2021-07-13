@@ -15,10 +15,10 @@ from __future__ import absolute_import
 
 import sys
 
-from .db12.benchmark import single_dirac_benchmark
-from .db12.benchmark import multiple_dirac_benchmark
-from .db12.benchmark import wholenode_dirac_benchmark
-from .db12.benchmark import jobslot_dirac_benchmark
+from db12 import single_dirac_benchmark
+from db12 import multiple_dirac_benchmark
+from db12 import wholenode_dirac_benchmark
+from db12 import jobslot_dirac_benchmark
 
 VERSION = "1.0.0 DB12"
 
