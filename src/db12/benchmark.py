@@ -8,6 +8,7 @@ import os
 import sys
 import random
 import multiprocessing
+import json
 
 if sys.version_info[0] < 3:
     #pylint: disable = E, W, R, C
