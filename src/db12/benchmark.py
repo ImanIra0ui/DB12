@@ -8,6 +8,7 @@ import os
 import sys
 import random
 import multiprocessing
+import json
 
 if sys.version_info[0] < 3:
     #pylint: disable = E, W, R, C
@@ -15,7 +16,7 @@ if sys.version_info[0] < 3:
 
 def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     """Get Normalized Power of one CPU in DIRAC Benchmark 2012 units (DB12)"""
-
+    #pylint: disable = too-many-locals
     # This number of iterations corresponds to 1kHS2k.seconds, i.e. 250 HS06 seconds
 
     iters = int(1000 * 1000 * 12.5)
@@ -61,13 +62,15 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
         return None
 
     # Return DIRAC-compatible values
-    return {
+    output = {
         "CPU": cput,
         "WALL": wall,
         "NORM": calib * iterations_num / cput,
         "UNIT": "DB12",
     }
-
+    with open('output.txt', 'w') as outfile:
+        json.dump(output, outfile)
+    return output
 
 def single_dirac_benchmark_process(result_object, iterations_num=1, measured_copies=None):
     """Run single_dirac_benchmark() in a multiprocessing friendly way"""
@@ -81,7 +84,6 @@ def single_dirac_benchmark_process(result_object, iterations_num=1, measured_cop
 
     # This makes it easy to use with multiprocessing.Process
     result_object.value = benchmark_result["NORM"]
-
 
 def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
     """Run multiple copies of the DIRAC Benchmark in parallel"""
@@ -124,7 +126,7 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
     raw.sort()
 
     # Return the list of raw results and various averages
-    return {
+    output = {
         "raw": raw,
         "copies": copies,
         "sum": sum(raw),
@@ -132,7 +134,9 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
         "geometric_mean": product ** (1.0 / copies),
         "median": raw[(copies - 1) // 2],
     }
-
+    with open('output.txt', 'w') as outfile:
+        json.dump(output, outfile)
+    return output
 
 def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
     """Run as many copies as needed to occupy the whole machine"""
