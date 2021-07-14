@@ -74,13 +74,12 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         sys.exit(0)
     elif not args.a.startswith("--"):
         copies = args.a
-        print(copies)
 
     if copies == "version":
         print(VERSION)
         sys.exit(0)
 
-    if copies is None or copies == "single":
+    if copies=='' or copies == "single":
         print(single_dirac_benchmark()["NORM"])
         sys.exit(0)
 
