@@ -17,10 +17,10 @@ from pkg_resources import get_distribution, DistributionNotFound
 import sys
 import argparse
 
-'''from db12 import single_dirac_benchmark
+from db12 import single_dirac_benchmark
 from db12 import multiple_dirac_benchmark
 from db12 import wholenode_dirac_benchmark
-from db12 import jobslot_dirac_benchmark'''
+from db12 import jobslot_dirac_benchmark
 
 try:
     VERSION = get_distribution("package-name").version
