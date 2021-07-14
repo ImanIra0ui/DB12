@@ -79,7 +79,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         print(VERSION)
         sys.exit(0)
 
-    if copies=='' or copies == "single":
+    if copies in ('', "single"):
         print(single_dirac_benchmark()["NORM"])
         sys.exit(0)
 
