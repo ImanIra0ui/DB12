@@ -73,7 +73,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         print(help_string)
         sys.exit(0)
     elif not args.a.startswith("--"):
-        copies = args
+        copies = args.a
 
     if copies == "version":
         print(VERSION)
