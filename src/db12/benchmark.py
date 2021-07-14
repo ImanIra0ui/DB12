@@ -21,6 +21,7 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     iters = int(1000 * 1000 * 12.5)
     calib = 250.0
     if sys.version_info[0] < 3:
+        #pylint: disable = E, W, R, C
         m_1 = long(0)
         m_2 = long(0)
     else:
