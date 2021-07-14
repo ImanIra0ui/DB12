@@ -22,7 +22,7 @@ from db12 import wholenode_dirac_benchmark
 from db12 import jobslot_dirac_benchmark
 
 try:
-    VERSION = get_distribution("package-name").version
+    VERSION = get_distribution("db12").version
 except DistributionNotFound:
     pass
 
@@ -74,6 +74,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         sys.exit(0)
     elif not args.a.startswith("--"):
         copies = args.a
+        print(copies)
 
     if copies == "version":
         print(VERSION)
