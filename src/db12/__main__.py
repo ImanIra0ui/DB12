@@ -12,10 +12,9 @@
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-from pkg_resources import get_distribution, DistributionNotFound
-
 import sys
 import argparse
+from pkg_resources import get_distribution, DistributionNotFound
 
 from db12 import single_dirac_benchmark
 from db12 import multiple_dirac_benchmark
