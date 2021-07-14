@@ -126,13 +126,14 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
     raw.sort()
 
     # Return the list of raw results and various averages
-    output = {"raw": raw,
+    output = {
+        "raw": raw,
         "copies": copies,
         "sum": sum(raw),
         "arithmetic_mean": sum(raw) / copies,
         "geometric_mean": product ** (1.0 / copies),
         "median": raw[(copies - 1) // 2],
-        }
+    }
     with open('output.txt', 'w') as outfile:
         json.dump(output, outfile)
     return output
