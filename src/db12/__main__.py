@@ -12,16 +12,19 @@
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-
 import sys
 import argparse
+from pkg_resources import get_distribution, DistributionNotFound
 
-'''from db12 import single_dirac_benchmark
+from db12 import single_dirac_benchmark
 from db12 import multiple_dirac_benchmark
 from db12 import wholenode_dirac_benchmark
-from db12 import jobslot_dirac_benchmark'''
+from db12 import jobslot_dirac_benchmark
 
-VERSION = "1.0.0 DB12"
+try:
+    VERSION = get_distribution("db12").version
+except DistributionNotFound:
+    pass
 
 def main():
     """Main function"""
@@ -70,13 +73,13 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         print(help_string)
         sys.exit(0)
     elif not args.a.startswith("--"):
-        copies = args
+        copies = args.a
 
     if copies == "version":
         print(VERSION)
         sys.exit(0)
 
-    if copies is None or copies == "single":
+    if copies in ('', "single"):
         print(single_dirac_benchmark()["NORM"])
         sys.exit(0)
 
