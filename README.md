@@ -1,6 +1,5 @@
 # DB12
-DIRAC benchmark 2012 is a really quick benchmark by Ricardo Graciani that uses wrapper functions by Andrew McNab to run multiple copies in parallel. 
-The (dirac_benchmark.py) file is intended to be the ultimate upstream shared by different users of the DIRAC Benchmark 2012 (DB12). 
+DIRAC benchmark 2012 is a really quick benchmark, originally developed by Ricardo Graciani (https://github.com/graciani) that uses wrapper functions by Andrew McNab (https://github.com/Andrew-McNab-UK) to run multiple copies in parallel. The current maintainers are Frederico Stagni and Alexandre Franck Boyer.
 
 It's distributed from https://github.com/DIRACGrid/DB12.
 
