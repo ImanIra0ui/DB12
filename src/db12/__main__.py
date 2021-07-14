@@ -14,11 +14,12 @@ from __future__ import division
 from __future__ import absolute_import
 
 import sys
+import argparse
 
-from db12 import single_dirac_benchmark
+'''from db12 import single_dirac_benchmark
 from db12 import multiple_dirac_benchmark
 from db12 import wholenode_dirac_benchmark
-from db12 import jobslot_dirac_benchmark
+from db12 import jobslot_dirac_benchmark'''
 
 VERSION = "1.0.0 DB12"
 
@@ -59,16 +60,22 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     iterations = 1
     extra_iteration = False
 
-    for arg in sys.argv[1:]:
-        if arg.startswith("--iterations="):
-            iterations = int(arg[13:])
-        elif arg == "--extra-iteration":
-            extra_iteration = True
-        elif arg in ("--help", "help"):
-            print(help_string)
-            sys.exit(0)
-        elif not arg.startswith("--"):
-            copies = arg
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--iterations", action="store_true")
+    parser.add_argument("--extra-iteration", action="store_true")
+    parser.add_argument("--help", action="store_true")
+    parser.add_argument("a", nargs='?', const='', default='')
+
+    args = parser.parse_args()
+    if args.iterations:
+        iterations = int(args[13:])
+    elif args.extra_iteration:
+        extra_iteration = True
+    elif args.help or args.a == "help":
+        print(help_string)
+        sys.exit(0)
+    elif not args.a.startswith("--"):
+        copies = args
 
     if copies == "version":
         print(VERSION)

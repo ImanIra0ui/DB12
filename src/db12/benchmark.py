@@ -9,10 +9,9 @@ import sys
 import random
 import multiprocessing
 
-if sys.version_info[0] >= 3:
+if sys.version_info[0] < 3:
     #pylint: disable = E, W, R, C
-    long = int 
-    xrange = range
+    range = xrange
 
 def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     """Get Normalized Power of one CPU in DIRAC Benchmark 2012 units (DB12)"""
@@ -21,9 +20,12 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
 
     iters = int(1000 * 1000 * 12.5)
     calib = 250.0
-
-    m_1 = long(0)
-    m_2 = long(0)
+    if sys.version_info[0] < 3:
+        m_1 = long(0)
+        m_2 = long(0)
+    else:
+        m_1 = int(0)
+        m_2 = int(0)
     p_1 = 0
     p_2 = 0
     # Do one iteration extra to allow CPUs with variable speed (we ignore zeroth iteration)
@@ -36,7 +38,7 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
             start = os.times()
 
         # Now the iterations
-        for _j in xrange(iters):
+        for _j in range(iters):
             t_1 = random.normalvariate(10, 1)
             m_1 += t_1
             m_2 += t_1 * t_1
@@ -94,7 +96,7 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
         measured_copies = None
 
     # Set up all the subprocesses
-    for i in xrange(copies):
+    for i in range(copies):
         results.append(multiprocessing.Value("d", 0.0))
         processes.append(
             multiprocessing.Process(
