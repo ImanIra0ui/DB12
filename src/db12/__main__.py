@@ -61,7 +61,6 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser = argparse.ArgumentParser()
     parser.add_argument("--iterations", type=int, help="number of iterations to perform")
     parser.add_argument("--extra-iteration", action="store_true")
-    parser.add_argument("--help", action="store_true")
 
     args = parser.parse_args()
     if args.iterations:
