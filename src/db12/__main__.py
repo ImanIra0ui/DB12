@@ -60,14 +60,16 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--iterations", type=int, help="number of iterations to perform")
-    parser.add_argument("--extra-iteration", action="store_true")
+    parser.add_argument("--extra-iteration", type=bool, help="whether an extra iteration is needed")
+    parser.add_argument("--json", type=str, help="generate json files")
+    parser.add_argument("copies", type=int, help="number of copies")
 
     args = parser.parse_args()
     if args.iterations:
         iterations = int(args[13:])
     elif args.extra_iteration:
         extra_iteration = True
-    elif not args.a.startswith("--"):
+    elif not args.copies.startswith("--"):
         copies = args.a
     else:
         parser = argparse.ArgumentParser(description=help_string)
