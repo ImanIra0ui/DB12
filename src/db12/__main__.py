@@ -68,10 +68,8 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         iterations = int(args[13:])
     elif args.extra_iteration:
         extra_iteration = True
-
     elif not args.a.startswith("--"):
         copies = args.a
-    
     else:
         parser = argparse.ArgumentParser(description=help_string)
 
