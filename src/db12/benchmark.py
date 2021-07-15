@@ -16,7 +16,7 @@ if sys.version_info[0] < 3:
 
 def single_dirac_benchmark(iterations_num=1, measured_copies=None):
     """Get Normalized Power of one CPU in DIRAC Benchmark 2012 units (DB12)"""
-
+    #pylint: disable = too-many-locals
     # This number of iterations corresponds to 1kHS2k.seconds, i.e. 250 HS06 seconds
 
     iters = int(1000 * 1000 * 12.5)
