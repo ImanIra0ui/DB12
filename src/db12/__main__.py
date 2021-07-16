@@ -26,6 +26,51 @@ try:
 except DistributionNotFound:
     pass
 
+def dump_as_json(filename, output):
+    with open(filename, 'w') as outfile:
+        json.dump(output, outfile)
+
+def single_dirac_benchmark_cli ():
+    result = single_dirac_benchmark()["NORM"]
+    print(result)
+    return result
+
+def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
+    result = jobslot_dirac_benchmark(iterations_num, extra_iter)
+    print(
+            result["copies"],
+            result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
+        )
+    print(" ".join([str(j) for j in result["raw"]]))
+    return result
+
+def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+    result = multiple_dirac_benchmark_clie(copies, iterations_num, extra_iter)
+    print(
+        result["copies"],
+        result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
+    print(" ".join([str(k) for k in result["raw"]]))
+    return result
+
+def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
+    result = wholenode_dirac_benchmark(iterations_num, extra_iter)
+    print(
+        result["copies"],
+        result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
+    print(" ".join([str(j) for j in result["raw"]]))
+    return result
+
 def main():
     """Main function"""
     help_string = """dirac_benchmark.py [--iterations ITERATIONS] [--extra-iteration]
@@ -63,63 +108,35 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("--extra-iteration", type=bool, help="whether an extra iteration is needed")
     parser.add_argument("--json", type=str, help="generate json files")
     parser.add_argument("copies", type=int, help="number of copies", nargs='?', const='', default='')
+    parser.add_argument('--version', action='version', version=VERSION)
 
+    subparsers = parser.add_subparsers()
+    parser_single = subparsers.add_parser('single')
+    parser_single.set_defaults(func=single_dirac_benchmark_cli)
+
+    parser_single = subparsers.add_parser('wholenode')
+    parser_wholenode.set_defaults(func=single_dirac_benchmark_cli)
+
+    parser_jobslot = subparsers.add_parser('jobslot')
+    parser_jobslot.set_defaults(func=single_dirac_benchmark_cli)
+
+    parser_multiple = subparsers.add_parser('multiple')
+    parser_multiple.set_defaults(func=single_dirac_benchmark_cli)
     args = parser.parse_args()
+
     if args.iterations:
         iterations = int(args[13:])
     elif args.extra_iteration:
         extra_iteration = True
+    elif args.json:
+        output = args.func(copies, extra_iteration, iterations)
+        dump_as_json(filename, output)
     elif not args.copies.startswith("--"):
         copies = args.a
     else:
         parser = argparse.ArgumentParser(description=help_string)
 
-    parser.add_argument('--version', action='version', version=VERSION)
-
-    if copies in ('', "single"):
-        print(single_dirac_benchmark()["NORM"])
-        sys.exit(0)
-
-    if copies == "wholenode":
-        result = wholenode_dirac_benchmark(
-            iterations_num=iterations, extra_iter=extra_iteration
-        )
-        print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
-        )
-        print(" ".join([str(j) for j in result["raw"]]))
-        sys.exit(0)
-
-    if copies == "jobslot":
-        result = jobslot_dirac_benchmark(
-            iterations_num=iterations, extra_iter=extra_iteration
-        )
-        print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
-        )
-        print(" ".join([str(j) for j in result["raw"]]))
-        sys.exit(0)
-
-    result = multiple_dirac_benchmark(
-        copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
-    )
-    print(
-        result["copies"],
-        result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
-    )
-    print(" ".join([str(k) for k in result["raw"]]))
-    sys.exit(0)
+    output = args.func(int(copies), extra_iteration, iterations)
 
 #
 # If we run as a command
