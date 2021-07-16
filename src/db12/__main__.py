@@ -12,7 +12,6 @@
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-import sys
 import argparse
 from pkg_resources import get_distribution, DistributionNotFound
 
@@ -27,15 +26,20 @@ except DistributionNotFound:
     pass
 
 def dump_as_json(filename, output):
+    '''Function to save result to a json file'''
     with open(filename, 'w') as outfile:
         json.dump(output, outfile)
 
 def single_dirac_benchmark_cli ():
+    '''Function that calls single_dirac_benchmark and prints
+    its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
     print(result)
     return result
 
 def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
+    '''Function that calls jobslot_dirac_benchmark and prints
+    its results and returns them'''
     result = jobslot_dirac_benchmark(iterations_num, extra_iter)
     print(
             result["copies"],
@@ -48,7 +52,9 @@ def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
     return result
 
 def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
-    result = multiple_dirac_benchmark_clie(copies, iterations_num, extra_iter)
+    '''Function that calls multiple_dirac_benchmark and prints
+    its results and returns them'''
+    result = multiple_dirac_benchmark(copies, iterations_num, extra_iter)
     print(
         result["copies"],
         result["sum"],
@@ -60,6 +66,8 @@ def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     return result
 
 def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
+    '''Function that calls wholenode_dirac_benchmark and prints
+    its results and returns them'''
     result = wholenode_dirac_benchmark(iterations_num, extra_iter)
     print(
         result["copies"],
@@ -114,7 +122,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser_single = subparsers.add_parser('single')
     parser_single.set_defaults(func=single_dirac_benchmark_cli)
 
-    parser_single = subparsers.add_parser('wholenode')
+    parser_wholenode = subparsers.add_parser('wholenode')
     parser_wholenode.set_defaults(func=single_dirac_benchmark_cli)
 
     parser_jobslot = subparsers.add_parser('jobslot')
@@ -130,7 +138,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         extra_iteration = True
     elif args.json:
         output = args.func(copies, extra_iteration, iterations)
-        dump_as_json(filename, output)
+        dump_as_json(args.json, output)
     elif not args.copies.startswith("--"):
         copies = args.a
     else:
