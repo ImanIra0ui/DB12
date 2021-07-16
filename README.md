@@ -1,5 +1,6 @@
 # DB12
-DIRAC benchmark 2012 is a really quick benchmark, originally developed by Ricardo Graciani (https://github.com/graciani) that uses wrapper functions by Andrew McNab (https://github.com/Andrew-McNab-UK) to run multiple copies in parallel. The current maintainers are Frederico Stagni and Alexandre Franck Boyer.
+DIRAC benchmark 2012 is a really quick benchmark, originally developed by Ricardo Graciani (https://github.com/graciani) that uses wrapper functions by Andrew McNab (https://github.com/Andrew-McNab-UK) to run multiple copies in parallel. Imane Iraoui (https://github.com/ImanIra0ui/) ported it to py3 and added many tests.
+The current maintainers are Federico Stagni (https://github.com/fstagni) and Alexandre Franck Boyer (https://github.com/aldbr).
 
 It's distributed from https://github.com/DIRACGrid/DB12.
 
