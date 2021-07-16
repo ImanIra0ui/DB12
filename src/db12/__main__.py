@@ -13,6 +13,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 import argparse
+import json
 from pkg_resources import get_distribution, DistributionNotFound
 
 from db12 import single_dirac_benchmark
@@ -115,7 +116,8 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("--iterations", type=int, help="number of iterations to perform")
     parser.add_argument("--extra-iteration", type=bool, help="whether an extra iteration is needed")
     parser.add_argument("--json", type=str, help="generate json files")
-    parser.add_argument("copies", type=int, help="number of copies", nargs='?', const='', default='')
+    parser.add_argument("copies", type=int, help="number of copies", 
+                        nargs='?', const='', default='')
     parser.add_argument('--version', action='version', version=VERSION)
 
     subparsers = parser.add_subparsers()
