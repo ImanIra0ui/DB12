@@ -116,12 +116,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("--iterations", type=int, help="number of iterations to perform")
     parser.add_argument("--extra-iteration", type=bool, help="whether an extra iteration is needed")
     parser.add_argument("--json", type=str, help="generate json files")
-    parser.add_argument(
-        "copies", type=int, 
-        help="number of copies", 
-        nargs='?', const='', 
-        default=''
-    )
+    parser.add_argument("copy", type=int, help="number of copies", nargs='?', const='', default='')
     parser.add_argument('--version', action='version', version=VERSION)
 
     subparsers = parser.add_subparsers()
@@ -145,8 +140,8 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     elif args.json:
         output = args.func(copies, extra_iteration, iterations)
         dump_as_json(args.json, output)
-    elif not args.copies.startswith("--"):
-        copies = args.a
+    elif not args.copy.startswith("--"):
+        copies = args.copy
     else:
         parser = argparse.ArgumentParser(description=help_string)
 
