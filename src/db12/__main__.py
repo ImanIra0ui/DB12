@@ -141,7 +141,10 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         output = args.func(copies, extra_iteration, iterations)
         dump_as_json(args.json, output)
     elif not args.copy.startswith("--"):
-        copies = args.copy
+        if copy == '':
+            copies = None
+        else:
+            copies = args.copy
     else:
         parser = argparse.ArgumentParser(description=help_string)
 
