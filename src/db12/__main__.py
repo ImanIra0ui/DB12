@@ -144,7 +144,6 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         copies = args.copy
     else:
         parser = argparse.ArgumentParser(description=help_string)
-        
     if copies == '':
         output = args.func(copies, extra_iteration, iterations)
     else:
