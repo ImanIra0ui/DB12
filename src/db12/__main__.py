@@ -31,7 +31,7 @@ def dump_as_json(filename, output):
     with open(filename, 'w') as outfile:
         json.dump(output, outfile)
 
-def single_dirac_benchmark_cli ():
+def single_dirac_benchmark_cli():
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
@@ -43,12 +43,11 @@ def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
     its results and returns them'''
     result = jobslot_dirac_benchmark(iterations_num, extra_iter)
     print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
-        )
+        result["copies"], result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
     print(" ".join([str(j) for j in result["raw"]]))
     return result
 
