@@ -112,11 +112,12 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     extra_iteration = False
 
     parser = argparse.ArgumentParser()
+    #pylint: disable=line-too-long
     parser.add_argument("--iterations", nargs='?', type=int, help="number of iterations to perform")
     parser.add_argument("--extra-iteration", nargs='?', type=bool, help="whether an extra iteration is needed")
-    parser.add_argument("--json", type=str, nargs='?', help="generate json files")
-    parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
-    parser.add_argument('--version', action='version', version=VERSION)
+    parser.add_argument("--json", nargs='?', type=str, help="generate json files")
+    parser.add_argument("copy", nargs='?', help="number of copies", const='', default='')
+    parser.add_argument('--version', nargs='?', action='version', version=VERSION)
 
     subparsers = parser.add_subparsers()
     parser_single = subparsers.add_parser('single')
