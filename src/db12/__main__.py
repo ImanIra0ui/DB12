@@ -113,9 +113,9 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     parser = argparse.ArgumentParser()
     #pylint: disable=line-too-long
-    parser.add_argument("--iterations", nargs='?', type=int, help="number of iterations to perform", default='')
-    parser.add_argument("--extra-iteration", nargs='?', type=bool, help="whether an extra iteration is needed", default='')
-    parser.add_argument("--json", nargs='?', type=str, help="generate json files", default='')
+    parser.add_argument("--iterations", nargs='?', help="number of iterations to perform", default='')
+    parser.add_argument("--extra-iteration", nargs='?', help="whether an extra iteration is needed", default='')
+    parser.add_argument("--json", nargs='?', help="generate json files", default='')
     parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
     parser.add_argument('--version', action='version', version=VERSION)
 
