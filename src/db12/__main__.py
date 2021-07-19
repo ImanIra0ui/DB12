@@ -117,7 +117,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("--extra-iteration", nargs='?', help="whether an extra iteration is needed", default='')
     parser.add_argument("--json", nargs='?', help="generate json files", default='')
     parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
-    parser.add_argument('--version', action='version', version=VERSION)
+    parser.add_argument('--version', action='version', version=VERSION, default='')
 
     subparsers = parser.add_subparsers()
     parser_single = subparsers.add_parser('single')
