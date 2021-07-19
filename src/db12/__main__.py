@@ -137,7 +137,10 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     elif args.extra_iteration:
         extra_iteration = True
     elif args.json:
-        output = args.func(copies, extra_iteration, iterations)
+        try:
+            output = args.func(copies, extra_iteration, iterations)
+        except AttributeError:
+            output = single_dirac_benchmark_cli()
         dump_as_json(args.json, output)
     elif not args.copy.startswith("--"):
         copies = args.copy
