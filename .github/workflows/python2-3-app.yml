@@ -30,7 +30,7 @@ jobs:
         
    # - name: Run pytest
     #  run: |
-     #   . "${CONDA}/bin/activate" test-env
+     #  . "${CONDA}/bin/activate" test-env
       #  pytest tests
 
     - uses: actions/checkout@v2
