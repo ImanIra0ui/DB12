@@ -28,10 +28,10 @@ jobs:
         list="$(find . -name \*.py -and -not -name '__init*' -and -not -name 'setup*')"
         for file in $list; do pylint $file --max-statements=100; done
         
-   # - name: Run pytest
-    #  run: |
-     #  . "${CONDA}/bin/activate" test-env
-      #  pytest tests
+    - name: Run pytest
+      run: |
+       . "${CONDA}/bin/activate" test-env
+        pytest tests
 
     - uses: actions/checkout@v2
     - name: Artifacts for integration test
