@@ -14,7 +14,6 @@ from __future__ import division
 from __future__ import absolute_import
 import argparse
 import json
-import sys
 from pkg_resources import get_distribution, DistributionNotFound
 
 from db12 import single_dirac_benchmark
