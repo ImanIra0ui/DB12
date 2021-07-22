@@ -12,8 +12,8 @@
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-import sys
 import argparse
+import json
 from pkg_resources import get_distribution, DistributionNotFound
 
 from db12 import single_dirac_benchmark
@@ -25,6 +25,59 @@ try:
     VERSION = get_distribution("db12").version
 except DistributionNotFound:
     pass
+
+def dump_as_json(filename, output):
+    '''Function to save result to a json file'''
+    with open(filename, 'w') as outfile:
+        json.dump(output, outfile)
+
+def single_dirac_benchmark_cli():
+    '''Function that calls single_dirac_benchmark and prints
+    its results and returns them'''
+    result = single_dirac_benchmark()["NORM"]
+    print(result)
+    return result
+
+def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
+    '''Function that calls jobslot_dirac_benchmark and prints
+    its results and returns them'''
+    result = jobslot_dirac_benchmark(iterations_num, extra_iter)
+    print(
+        result["copies"], result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
+    print(" ".join([str(j) for j in result["raw"]]))
+    return result
+
+def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+    '''Function that calls multiple_dirac_benchmark and prints
+    its results and returns them'''
+    result = multiple_dirac_benchmark(copies, iterations_num, extra_iter)
+    print(
+        result["copies"],
+        result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
+    print(" ".join([str(k) for k in result["raw"]]))
+    return result
+
+def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
+    '''Function that calls wholenode_dirac_benchmark and prints
+    its results and returns them'''
+    result = wholenode_dirac_benchmark(iterations_num, extra_iter)
+    print(
+        result["copies"],
+        result["sum"],
+        result["arithmetic_mean"],
+        result["geometric_mean"],
+        result["median"],
+    )
+    print(" ".join([str(j) for j in result["raw"]]))
+    return result
 
 def main():
     """Main function"""
@@ -58,71 +111,50 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     iterations = 1
     extra_iteration = False
 
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("--iterations", action="store_true")
-    parser.add_argument("--extra-iteration", action="store_true")
-    parser.add_argument("--help", action="store_true")
-    parser.add_argument("a", nargs='?', const='', default='')
+    parser = argparse.ArgumentParser()
+    #pylint: disable=line-too-long
+    parser.add_argument("--iterations", nargs='?', help="number of iterations to perform", default='')
+    parser.add_argument("--extra-iteration", nargs='?', help="whether an extra iteration is needed", default='')
+    parser.add_argument("--json", nargs='?', help="generate json files", default='')
+    parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
+    parser.add_argument('--version', action='version', version=VERSION, default='')
+
+    subparsers = parser.add_subparsers(dest='parser')
+    parser_single = subparsers.add_parser('single')
+    parser_single.set_defaults(func=single_dirac_benchmark_cli)
+
+    parser_wholenode = subparsers.add_parser('wholenode')
+    parser_wholenode.set_defaults(func=wholenode_dirac_benchmark_cli)
+
+    parser_jobslot = subparsers.add_parser('jobslot')
+    parser_jobslot.set_defaults(func=jobslot_dirac_benchmark_cli)
+
+    parser_multiple = subparsers.add_parser('multiple')
+    parser_multiple.set_defaults(func=multiple_dirac_benchmark_cli)
 
     args = parser.parse_args()
+
     if args.iterations:
         iterations = int(args[13:])
     elif args.extra_iteration:
         extra_iteration = True
-    elif args.help or args.a == "help":
-        print(help_string)
-        sys.exit(0)
-    elif not args.a.startswith("--"):
-        copies = args.a
-
-    if copies == "version":
-        print(VERSION)
-        sys.exit(0)
-
-    if copies in ('', "single"):
-        print(single_dirac_benchmark()["NORM"])
-        sys.exit(0)
-
-    if copies == "wholenode":
-        result = wholenode_dirac_benchmark(
-            iterations_num=iterations, extra_iter=extra_iteration
-        )
-        print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
-        )
-        print(" ".join([str(j) for j in result["raw"]]))
-        sys.exit(0)
-
-    if copies == "jobslot":
-        result = jobslot_dirac_benchmark(
-            iterations_num=iterations, extra_iter=extra_iteration
-        )
-        print(
-            result["copies"],
-            result["sum"],
-            result["arithmetic_mean"],
-            result["geometric_mean"],
-            result["median"],
-        )
-        print(" ".join([str(j) for j in result["raw"]]))
-        sys.exit(0)
-
-    result = multiple_dirac_benchmark(
-        copies=int(copies), iterations_num=iterations, extra_iter=extra_iteration
-    )
-    print(
-        result["copies"],
-        result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
-    )
-    print(" ".join([str(k) for k in result["raw"]]))
-    sys.exit(0)
+    elif args.json:
+        try:
+            output = args.func(copies, extra_iteration, iterations)
+        except AttributeError:
+            output = single_dirac_benchmark_cli()
+        dump_as_json(args.json, output)
+    elif not args.copy.startswith("--"):
+        copies = args.copy
+    else:
+        parser = argparse.ArgumentParser(description=help_string)
+    try:
+        if copies in ('', "single"):
+            output = args.func()
+        else:
+            output = args.func(int(copies), extra_iteration, iterations)
+    except AttributeError:
+        output = single_dirac_benchmark_cli()
 
 #
 # If we run as a command
