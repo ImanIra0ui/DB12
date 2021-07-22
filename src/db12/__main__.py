@@ -133,10 +133,6 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser_multiple = subparsers.add_parser('multiple')
     parser_multiple.set_defaults(func=multiple_dirac_benchmark_cli)
 
-    if sys.version_info[0] < 3:
-        parser_noargs = subparsers.add_parser('')
-        parser_noargs.set_defaults(func=single_dirac_benchmark_cli)
-
     args = parser.parse_args()
 
     if args.iterations:
