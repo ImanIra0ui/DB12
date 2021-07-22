@@ -14,6 +14,7 @@ from __future__ import division
 from __future__ import absolute_import
 import argparse
 import json
+import sys
 from pkg_resources import get_distribution, DistributionNotFound
 
 from db12 import single_dirac_benchmark
@@ -134,7 +135,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     if sys.version_info[0] < 3:
         parser_noargs = subparsers.add_parser('')
-        parser_noards.set_defaults(func=single_dirac_benchmark_cli)
+        parser_noargs.set_defaults(func=single_dirac_benchmark_cli)
 
     args = parser.parse_args()
 
