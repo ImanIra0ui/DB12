@@ -133,7 +133,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     parser_multiple = subparsers.add_parser('multiple')
     parser_multiple.set_defaults(func=single_dirac_benchmark_cli)
-    args = parser.parse_args()
+    args = parser.parse_args()\
 
     if args.iterations:
         iterations = int(args[13:])
@@ -153,7 +153,10 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         if copies == '':
             output = args.func(copies, extra_iteration, iterations)
         else:
-            output = args.func(int(copies), extra_iteration, iterations)
+            if copies == "single":
+                output = args.func()
+            else:
+                output = args.func(int(copies), extra_iteration, iterations)
     except AttributeError:
         output = single_dirac_benchmark_cli()
 
