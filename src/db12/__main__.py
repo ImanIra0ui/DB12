@@ -119,9 +119,8 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
     parser.add_argument('--version', action='version', version=VERSION, default='')
 
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest='parser')
     subparsers.required = False
-    subparsers.dest = 'command'
     parser_single = subparsers.add_parser('single')
     parser_single.set_defaults(func=single_dirac_benchmark_cli)
 
@@ -150,13 +149,10 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     else:
         parser = argparse.ArgumentParser(description=help_string)
     try:
-        if copies == '':
+        if copies == '' or copies == "single":
             output = args.func()
         else:
-            if copies == "single":
-                output = args.func()
-            else:
-                output = args.func(int(copies), extra_iteration, iterations)
+            output = args.func(int(copies), extra_iteration, iterations)
     except AttributeError:
         output = single_dirac_benchmark_cli()
 
