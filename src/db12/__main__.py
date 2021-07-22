@@ -120,19 +120,23 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument('--version', action='version', version=VERSION, default='')
 
     subparsers = parser.add_subparsers(dest='parser')
-    subparsers.required = False
     parser_single = subparsers.add_parser('single')
     parser_single.set_defaults(func=single_dirac_benchmark_cli)
 
     parser_wholenode = subparsers.add_parser('wholenode')
-    parser_wholenode.set_defaults(func=single_dirac_benchmark_cli)
+    parser_wholenode.set_defaults(func=wholenode_dirac_benchmark_cli)
 
     parser_jobslot = subparsers.add_parser('jobslot')
-    parser_jobslot.set_defaults(func=single_dirac_benchmark_cli)
+    parser_jobslot.set_defaults(func=jobslot_dirac_benchmark_cli)
 
     parser_multiple = subparsers.add_parser('multiple')
-    parser_multiple.set_defaults(func=single_dirac_benchmark_cli)
-    args = parser.parse_args()\
+    parser_multiple.set_defaults(func=multiple_dirac_benchmark_cli)
+
+    if sys.version_info[0] < 3:
+        parser_noargs = subparsers.add_parser('')
+        parser_noards.set_defaults(func=single_dirac_benchmark_cli)
+
+    args = parser.parse_args()
 
     if args.iterations:
         iterations = int(args[13:])
