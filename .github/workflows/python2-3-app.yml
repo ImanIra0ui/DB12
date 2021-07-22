@@ -38,7 +38,7 @@ jobs:
       run: 
         |
         . "${CONDA}/bin/activate" test-env
-        python src/db12/__main__.py wholenode > result_python${{ matrix.python_version }}.txt
+        python src/db12/__main__.py > result_python${{ matrix.python_version }}.txt
   
     - uses: actions/upload-artifact@v2
       with:
