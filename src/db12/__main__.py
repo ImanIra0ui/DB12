@@ -151,7 +151,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         parser = argparse.ArgumentParser(description=help_string)
     try:
         if copies == '':
-            output = args.func(copies, extra_iteration, iterations)
+            output = args.func()
         else:
             if copies == "single":
                 output = args.func()
