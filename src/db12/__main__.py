@@ -123,7 +123,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser_single = subparsers.add_parser('--single')
     parser_single.set_defaults(func=single_dirac_benchmark_cli)
 
-    parser_wholenode = subparsers.add_parser(--'wholenode')
+    parser_wholenode = subparsers.add_parser('--wholenode')
     parser_wholenode.set_defaults(func=single_dirac_benchmark_cli)
 
     parser_jobslot = subparsers.add_parser('--jobslot')
