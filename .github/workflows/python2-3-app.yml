@@ -32,15 +32,3 @@ jobs:
       run: |
        . "${CONDA}/bin/activate" test-env
         pytest tests
-
-    - uses: actions/checkout@v2
-    - name: Artifacts for integration test
-      run: 
-        |
-        . "${CONDA}/bin/activate" test-env
-        python src/db12/__main__.py single > result_python${{ matrix.python_version }}.txt
-  
-    - uses: actions/upload-artifact@v2
-      with:
-        name: Integration test 
-        path: result_python${{ matrix.python_version }}.txt
