@@ -55,7 +55,7 @@ def jobslot_dirac_benchmark_cli(args):
 def multiple_dirac_benchmark_cli(args):
     '''Function that calls multiple_dirac_benchmark and prints
     its results and returns them'''
-    result = multiple_dirac_benchmark(args.copy, args.iterations, args.extra_iteration)
+    result = multiple_dirac_benchmark(int(args.copy), args.iterations, args.extra_iteration)
     print(
         result["copies"],
         result["sum"],
