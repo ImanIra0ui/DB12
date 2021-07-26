@@ -33,7 +33,7 @@ def dump_as_json(filename, output):
 
 def single_dirac_benchmark_cli(args):
     '''Function that calls single_dirac_benchmark and prints
-    its results and returns them'''
+    its results/calls dump_as_json'''
     result = single_dirac_benchmark()["NORM"]
     if args.json:
         dump_as_json(args.json, result)
@@ -42,7 +42,7 @@ def single_dirac_benchmark_cli(args):
 
 def jobslot_dirac_benchmark_cli(args):
     '''Function that calls jobslot_dirac_benchmark and prints
-    its results and returns them'''
+    its results/calls dump_as_json'''
     result = jobslot_dirac_benchmark(args.iterations, args.extra_iteration)
     if args.json:
         dump_as_json(args.json, result)
@@ -57,7 +57,7 @@ def jobslot_dirac_benchmark_cli(args):
 
 def multiple_dirac_benchmark_cli(args):
     '''Function that calls multiple_dirac_benchmark and prints
-    its results and returns them'''
+    its results/calls dump_as_json'''
     result = multiple_dirac_benchmark(int(args.copy), args.iterations, args.extra_iteration)
     if args.json:
         dump_as_json(args.json, result)
@@ -73,7 +73,7 @@ def multiple_dirac_benchmark_cli(args):
 
 def wholenode_dirac_benchmark_cli(args):
     '''Function that calls wholenode_dirac_benchmark and prints
-    its results and returns them'''
+    its results/calls dump_as_json'''
     result = wholenode_dirac_benchmark(args.iterations, args.extra_iteration)
     if args.json:
         dump_as_json(args.json, result)
