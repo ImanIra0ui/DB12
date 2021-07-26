@@ -31,14 +31,14 @@ def dump_as_json(filename, output):
     with open(filename, 'w') as outfile:
         json.dump(output, outfile)
 
-def single_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+def single_dirac_benchmark_cli():
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
     print(result)
     return result
 
-def jobslot_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
     '''Function that calls jobslot_dirac_benchmark and prints
     its results and returns them'''
     result = jobslot_dirac_benchmark(iterations_num, extra_iter)
@@ -65,7 +65,7 @@ def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     print(" ".join([str(k) for k in result["raw"]]))
     return result
 
-def wholenode_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
     '''Function that calls wholenode_dirac_benchmark and prints
     its results and returns them'''
     result = wholenode_dirac_benchmark(iterations_num, extra_iter)
@@ -138,7 +138,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         extra_iteration = True
     elif args.json:
         try:
-            output = args.func(copies, extra_iteration, iterations)
+            output = args.func()
         except AttributeError:
             output = single_dirac_benchmark_cli()
         dump_as_json(args.json, output)
@@ -150,7 +150,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         if copies == "single":
             output = args.func()
         else:
-            output = args.func(copies, extra_iteration, iterations)
+            output = args.func()
     except AttributeError:
         output = single_dirac_benchmark_cli()
 
