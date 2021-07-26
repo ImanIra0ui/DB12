@@ -115,7 +115,6 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser.add_argument("--iterations", nargs='?', type=int, help="number of iterations to perform", default=iterations)
     parser.add_argument("--extra-iteration", help="whether an extra iteration is needed", action='store_true')
     parser.add_argument("--json", help="generate json files", action='store_true')
-    parser.add_argument("copy", help="number of copies", nargs='?', const='', default='')
     parser.add_argument('--version', action='version', version=VERSION, default='')
 
     subparsers = parser.add_subparsers(dest='parser')
@@ -129,7 +128,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser_jobslot.set_defaults(func=jobslot_dirac_benchmark_cli)
 
     parser_multiple = subparsers.add_parser('multiple')
-    parser_multiple.add_argument("copy", help="number of copies", nargs='?', const='', default=None)
+    parser_multiple.add_argument("copy", type=int, help="number of copies", nargs='?', const='', default=None)
     parser_multiple.set_defaults(func=multiple_dirac_benchmark_cli)
 
     args = parser.parse_args()
