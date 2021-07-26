@@ -38,10 +38,10 @@ def single_dirac_benchmark_cli():
     print(result)
     return result
 
-def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
+def jobslot_dirac_benchmark_cli(args):
     '''Function that calls jobslot_dirac_benchmark and prints
     its results and returns them'''
-    result = jobslot_dirac_benchmark(iterations_num, extra_iter)
+    result = jobslot_dirac_benchmark(args.iterations, args.extra_iteration)
     print(
         result["copies"], result["sum"],
         result["arithmetic_mean"],
@@ -51,10 +51,10 @@ def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
     print(" ".join([str(j) for j in result["raw"]]))
     return result
 
-def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
+def multiple_dirac_benchmark_cli(args):
     '''Function that calls multiple_dirac_benchmark and prints
     its results and returns them'''
-    result = multiple_dirac_benchmark(copies, iterations_num, extra_iter)
+    result = multiple_dirac_benchmark(args.copies, args.iterations, args.extra_iteration)
     print(
         result["copies"],
         result["sum"],
@@ -65,10 +65,10 @@ def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     print(" ".join([str(k) for k in result["raw"]]))
     return result
 
-def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
+def wholenode_dirac_benchmark_cli(args):
     '''Function that calls wholenode_dirac_benchmark and prints
     its results and returns them'''
-    result = wholenode_dirac_benchmark(iterations_num, extra_iter)
+    result = wholenode_dirac_benchmark(args.iterations, args.extra_iteration)
     print(
         result["copies"],
         result["sum"],
@@ -134,27 +134,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     args = parser.parse_args()
 
-    if args.extra_iteration:
-        extra_iteration = True
-    elif args.json:
-        try:
-            output = args.func()
-        except AttributeError:
-            output = single_dirac_benchmark_cli()
-        dump_as_json(args.json, output)
-    elif not args.copy.startswith("--"):
-        copies = args.copy
-    else:
-        parser = argparse.ArgumentParser(description=help_string)
-    try:
-        if copies == "single":
-            output = args.func()
-        elif copies == "multiple":
-            output = args.func(copies, iterations, extra_iteration)
-        else:
-            output = args.func(iterations, extra_iteration)
-    except AttributeError:
-        output = single_dirac_benchmark_cli()
+    args.func(args)
 
 #
 # If we run as a command
