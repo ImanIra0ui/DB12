@@ -109,6 +109,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     copies = None
     iterations = 1
+    extra_iteration = False
 
     parser = argparse.ArgumentParser(description=help_string)
     #pylint: disable=line-too-long
@@ -133,7 +134,9 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     args = parser.parse_args()
 
-    if args.json:
+    if args.extra_iteration:
+        extra_iteration = True
+    elif args.json:
         try:
             output = args.func()
         except AttributeError:
@@ -146,8 +149,10 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     try:
         if copies == "single":
             output = args.func()
+        elif copies == "multiple":
+            output = args.func(copies, iterations, extra_iteration)
         else:
-            output = args.func()
+            output = args.func(iterations, extra_iteration)
     except AttributeError:
         output = single_dirac_benchmark_cli()
 
