@@ -31,7 +31,7 @@ def dump_as_json(filename, output):
     with open(filename, 'w') as outfile:
         json.dump(output, outfile)
 
-def single_dirac_benchmark_cli():
+def single_dirac_benchmark_cli(args):
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
