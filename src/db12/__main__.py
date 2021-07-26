@@ -107,9 +107,7 @@ within dirac_benchmark.py can be used by other Python programs.
 dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 """
 
-    copies = None
     iterations = 1
-    extra_iteration = False
 
     parser = argparse.ArgumentParser(description=help_string)
     #pylint: disable=line-too-long
