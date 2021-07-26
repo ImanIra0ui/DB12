@@ -134,9 +134,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     args = parser.parse_args()
 
-    if args.iterations:
-        iterations = int(args[13:])
-    elif args.extra_iteration:
+    if args.extra_iteration:
         extra_iteration = True
     elif args.json:
         try:
