@@ -150,7 +150,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
         if copies == "single":
             output = args.func()
         else:
-            output = args.func(int(copies), extra_iteration, iterations)
+            output = args.func(copies, extra_iteration, iterations)
     except AttributeError:
         output = single_dirac_benchmark_cli()
 
