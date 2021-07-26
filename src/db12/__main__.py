@@ -32,6 +32,7 @@ def dump_as_json(filename, output):
         json.dump(output, outfile)
 
 def single_dirac_benchmark_cli(args):
+    #pylint: disable=unused-argument
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
