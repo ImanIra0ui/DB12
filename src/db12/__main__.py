@@ -129,6 +129,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     parser_jobslot.set_defaults(func=jobslot_dirac_benchmark_cli)
 
     parser_multiple = subparsers.add_parser('multiple')
+    parser_multiple.add_argument("copy", help="number of copies", nargs='?', const='', default=None)
     parser_multiple.set_defaults(func=multiple_dirac_benchmark_cli)
 
     args = parser.parse_args()
