@@ -68,8 +68,6 @@ def single_dirac_benchmark(iterations_num=1, measured_copies=None):
         "NORM": calib * iterations_num / cput,
         "UNIT": "DB12",
     }
-    with open('output.txt', 'w') as outfile:
-        json.dump(output, outfile)
     return output
 
 def single_dirac_benchmark_process(result_object, iterations_num=1, measured_copies=None):
