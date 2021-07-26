@@ -32,53 +32,60 @@ def dump_as_json(filename, output):
         json.dump(output, outfile)
 
 def single_dirac_benchmark_cli(args):
-    #pylint: disable=unused-argument
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
-    print(result)
-    return result
+    if args.json:
+        dump_as_json(args.json, result)
+    else:
+        print(result)
 
 def jobslot_dirac_benchmark_cli(args):
     '''Function that calls jobslot_dirac_benchmark and prints
     its results and returns them'''
     result = jobslot_dirac_benchmark(args.iterations, args.extra_iteration)
-    print(
-        result["copies"], result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
-    )
-    print(" ".join([str(j) for j in result["raw"]]))
-    return result
+    if args.json:
+        dump_as_json(args.json, result)
+    else:
+        print(
+            result["copies"], result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
+        )
+        print(" ".join([str(j) for j in result["raw"]]))
 
 def multiple_dirac_benchmark_cli(args):
     '''Function that calls multiple_dirac_benchmark and prints
     its results and returns them'''
     result = multiple_dirac_benchmark(int(args.copy), args.iterations, args.extra_iteration)
-    print(
-        result["copies"],
-        result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
-    )
-    print(" ".join([str(k) for k in result["raw"]]))
-    return result
+    if args.json:
+        dump_as_json(args.json, result)
+    else:
+        print(
+            result["copies"],
+            result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
+        )
+        print(" ".join([str(k) for k in result["raw"]]))
 
 def wholenode_dirac_benchmark_cli(args):
     '''Function that calls wholenode_dirac_benchmark and prints
     its results and returns them'''
     result = wholenode_dirac_benchmark(args.iterations, args.extra_iteration)
-    print(
-        result["copies"],
-        result["sum"],
-        result["arithmetic_mean"],
-        result["geometric_mean"],
-        result["median"],
-    )
-    print(" ".join([str(j) for j in result["raw"]]))
-    return result
+    if args.json:
+        dump_as_json(args.json, result)
+    else:
+        print(
+            result["copies"],
+            result["sum"],
+            result["arithmetic_mean"],
+            result["geometric_mean"],
+            result["median"],
+        )
+        print(" ".join([str(j) for j in result["raw"]]))
 
 def main():
     """Main function"""
