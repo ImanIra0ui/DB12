@@ -30,7 +30,7 @@ jobs:
         
     - name: Run pytest
       run: |
-       #. "${CONDA}/bin/activate" test-env
+        . "${CONDA}/bin/activate" test-env
         #pytest tests
         python src/db12/__main__.py single
         python src/db12/__main__.py wholenode
