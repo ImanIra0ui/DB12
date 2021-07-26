@@ -31,14 +31,14 @@ def dump_as_json(filename, output):
     with open(filename, 'w') as outfile:
         json.dump(output, outfile)
 
-def single_dirac_benchmark_cli():
+def single_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     '''Function that calls single_dirac_benchmark and prints
     its results and returns them'''
     result = single_dirac_benchmark()["NORM"]
     print(result)
     return result
 
-def jobslot_dirac_benchmark_cli(iterations_num, extra_iter):
+def jobslot_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     '''Function that calls jobslot_dirac_benchmark and prints
     its results and returns them'''
     result = jobslot_dirac_benchmark(iterations_num, extra_iter)
@@ -65,7 +65,7 @@ def multiple_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     print(" ".join([str(k) for k in result["raw"]]))
     return result
 
-def wholenode_dirac_benchmark_cli(iterations_num, extra_iter):
+def wholenode_dirac_benchmark_cli(copies, iterations_num, extra_iter):
     '''Function that calls wholenode_dirac_benchmark and prints
     its results and returns them'''
     result = wholenode_dirac_benchmark(iterations_num, extra_iter)
