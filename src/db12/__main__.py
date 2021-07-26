@@ -111,7 +111,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
     iterations = 1
     extra_iteration = False
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=help_string)
     #pylint: disable=line-too-long
     parser.add_argument("--iterations", nargs='?', type=int, help="number of iterations to perform", default=iterations)
     parser.add_argument("--extra-iteration", nargs='?', help="whether an extra iteration is needed", default='')
