@@ -132,8 +132,6 @@ def multiple_dirac_benchmark(copies=1, iterations_num=1, extra_iter=False):
         "geometric_mean": product ** (1.0 / copies),
         "median": raw[(copies - 1) // 2],
     }
-    with open('output.txt', 'w') as outfile:
-        json.dump(output, outfile)
     return output
 
 def wholenode_dirac_benchmark(copies=None, iterations_num=1, extra_iter=False):
