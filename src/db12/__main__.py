@@ -133,9 +133,7 @@ dirac_benchmark.py is distributed from  https://github.com/DIRACGrid/DB12
 
     args = parser.parse_args()
 
-    if args.extra_iteration:
-        extra_iteration = True
-    elif args.json:
+    if args.json:
         try:
             output = args.func()
         except AttributeError:
